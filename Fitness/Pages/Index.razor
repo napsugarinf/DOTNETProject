@@ -1,0 +1,113 @@
+﻿@page "/"
+
+@using Fitness.Data
+@inject Fitness.IService.IClientService clientService
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-md-4">
+                <label> Name: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="Client.Name" style="width:100%;" placeholder="Client Name"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label> Phone Number: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="Client.PhoneNr" style="width:100%;" placeholder="Client Name" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label> Email: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="Client.Email" style="width:100%;" placeholder="Client Name" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"> </div>
+            <div class="col-md-8">
+               <button class="btn btn-primary" @onclick="@(e=>Save())">Save</button>
+                <button class="btn btn-primary" @onclick="@(e=>Reset())"style="float:right;">Reset</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Client Id   </th>
+                    <th>Name  </th>
+                    <th>Phone Number  </th>
+                    <th>Email   </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Clients.Count() > 0)
+                {
+                    @foreach (var cli in Clients)
+                    {
+                    <tr>
+                            <td>@cli.Id</td>
+                            <td>@cli.Name</td>
+                            <td>@cli.PhoneNr</td>
+                            <td>@cli.Email</td>
+                            <td>
+                                <button class="btn btn-primary" @onclick="@(e=>Edit(cli.Id))">Edit</button>
+                                <button class="btn btn-primary" @onclick="@(e=>Delete(cli.Id))">Delete</button>
+                            </td>
+                    </tr>    
+                    }
+
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+@code{
+    Client Client = new Client();
+    List<Client> Clients = new List<Client>();
+    protected override async Task OnInitializedAsync()
+    {
+        GetClients();  
+
+    }
+    private void GetClients()
+    {
+        Clients = clientService.GetClients();    
+    }
+    private void Save()
+    {
+        clientService.SaveOrUpdate(Client);
+        Reset();
+        GetClients();
+    }
+    private void Reset()
+    {
+        Client = new Client();
+
+    }
+    private void Edit(string clientId)
+    {
+        Client = clientService.GetClient(clientId);
+    }
+    private void Delete(string clientId)
+    {
+        clientService.Delete(clientId);
+        GetClients();
+    }
+}
