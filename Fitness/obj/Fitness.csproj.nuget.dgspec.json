@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\Fitness.csproj": {}
+    "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\Fitness.csproj": {}
   },
   "projects": {
-    "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\Fitness.csproj": {
+    "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\Fitness.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\Fitness.csproj",
+        "projectUniqueName": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\Fitness.csproj",
         "projectName": "Fitness",
-        "projectPath": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\Fitness.csproj",
-        "packagesPath": "C:\\Users\\napsu\\.nuget\\packages\\",
-        "outputPath": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\obj\\",
+        "projectPath": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\Fitness.csproj",
+        "packagesPath": "C:\\Users\\porti\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\napsu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\porti\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -69,7 +69,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
