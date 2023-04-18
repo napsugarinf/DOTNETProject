@@ -1,0 +1,168 @@
+﻿@page "/addnewtypeofmembership"
+
+<PageTitle>Type of memberships</PageTitle>
+
+@using Fitness.Data
+@inject Fitness.IService.ITypeOfMembership typeOfMembershipService
+@inject Fitness.IService.IGymService gymService
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-md-8">
+                <label> Description </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="TypeOfMembership.Description" style="width:100%;" placeholder="Description" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label> Price: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="TypeOfMembership.Price" style="width:100%;" placeholder="Price" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label> Validity in days: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="TypeOfMembership.ValidityInDays" style="width:100%;" placeholder=" Validity in days:" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label> Validity in check in: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="TypeOfMembership.ValidityInCheckIn" style="width:100%;" placeholder=" Validity in days:" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label> Gym ID... legordulo kellene: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="TypeOfMembership.GymId" style="width:100%;" placeholder=" Gym ID... legordulo kellene:" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label> From time: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="TypeOfMembership.FromTime" style="width:100%;" placeholder=" From Time" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label> To time: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="TypeOfMembership.ToTime" style="width:100%;" placeholder=" To Time" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label> Number of possible usages daily: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="TypeOfMembership.NrOfPossibleUsagesDaily" style="width:100%;" placeholder=" Number of possible usages daily:" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"> </div>
+            <div class="col-md-8">
+                <button class="btn btn-primary" @onclick="@(e=>Save())">Save</button>
+                <button class="btn btn-primary" @onclick="@(e=>Reset())" style="float:right;">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-8">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Description  </th>
+                <th>Price </th>
+                <th>Validity in days   </th>
+                <th>Validity in check in   </th>
+                <th>Gym Name </th>
+                <th>From  </th>
+                <th>To   </th>
+                <th>Possible usages daily   </th>
+
+            </tr>
+        </thead>
+        <tbody>
+           
+            @if (TypeOfMemberships.Count() > 0)
+            {
+                
+                @foreach (var mem in TypeOfMemberships)
+                {
+                    <tr>
+                        <td>@mem.Description</td>
+                        <td>@mem.Price</td>
+                        <td>@mem.ValidityInDays</td>
+                        <td>@mem.ValidityInCheckIn</td>
+                        <td>@mem.GymId</td>
+                        <td>@mem.FromTime </td>
+                        <td>@mem.ToTime</td>
+                        <td>@mem.NrOfPossibleUsagesDaily</td>
+                        <td>
+                            <button class="btn btn-primary" @onclick="@(e=>Edit(mem.Id))">Edit</button>
+                            <button class="btn btn-primary" @onclick="@(e=>Delete(mem.Id))">Delete</button>
+                        </td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    TypeOfMembership TypeOfMembership = new TypeOfMembership();
+
+    List<TypeOfMembership> TypeOfMemberships = new List<TypeOfMembership>();
+    List<Gym> GymList = new List<Gym>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        GetTypeOfMemberships();
+        GetGymList();
+
+    }
+    private void GetTypeOfMemberships()
+    {
+        TypeOfMemberships = typeOfMembershipService.GetTypeOfMemberships();
+    }
+    private void GetGymList()
+    {
+        GymList = gymService.GetGyms();
+    }
+    private void Save()
+    {
+        typeOfMembershipService.SaveOrUpdate(TypeOfMembership);
+        Reset();
+        GetTypeOfMemberships();
+    }
+    private void Reset()
+    {
+        TypeOfMembership = new TypeOfMembership();
+
+    }
+    private void Edit(string typeOfMembershipId)
+    {
+        TypeOfMembership = typeOfMembershipService.GetTypeOfMembership(typeOfMembershipId);
+    }
+    private void Delete(string typeOfMembershipId)
+    {
+        typeOfMembershipService.Delete(typeOfMembershipId);
+        GetTypeOfMemberships();
+    }
+}

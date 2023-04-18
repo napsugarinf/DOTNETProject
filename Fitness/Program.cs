@@ -11,6 +11,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<ITypeOfMembership, TypeOfMembershipService>();
+builder.Services.AddScoped<IGymService, GymService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
