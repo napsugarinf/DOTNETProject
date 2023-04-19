@@ -42,10 +42,18 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <label> Gym ID... legordulo kellene: </label>
+                <label> Gym </label>
             </div>
             <div class="col-md-8">
-                <input @bind="TypeOfMembership.GymId" style="width:100%;" placeholder=" Gym ID... legordulo kellene:" />
+                <select class="Select-gym-id" @bind="TypeOfMembership.GymId">
+                    <option selected disabled="true"> Select gym  </option>
+                        @foreach (var gym in GymList)
+                        {
+                            <option value="@gym.Id" >
+                                @gym.Name
+                            </option>
+                        }
+                </select>
             </div>
         </div>
         <div class="row">
@@ -76,7 +84,7 @@
             <div class="col-md-4"> </div>
             <div class="col-md-8">
                 <button class="btn btn-primary" @onclick="@(e=>Save())">Save</button>
-                <button class="btn btn-primary" @onclick="@(e=>Reset())" style="float:right;">Reset</button>
+                <button class="btn btn-primary" @onclick="@(e=>Reset())" style="float:right;" >Reset</button>
             </div>
         </div>
     </div>
@@ -90,7 +98,7 @@
                 <th>Price </th>
                 <th>Validity in days   </th>
                 <th>Validity in check in   </th>
-                <th>Gym Name </th>
+                <th>Gym Id </th>
                 <th>From  </th>
                 <th>To   </th>
                 <th>Possible usages daily   </th>
