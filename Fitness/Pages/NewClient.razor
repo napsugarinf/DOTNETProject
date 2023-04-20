@@ -53,7 +53,8 @@
                 <label> Barcode: </label>
             </div>
             <div class="col-md-8">
-                <input @bind="Client.Barcode" style="width:100%;" placeholder="Barcode" />
+                <button class="btn btn-primary" @onclick="@(e=>GenerateBarcode())">Generate barcode</button>
+                <label>@Client.Barcode</label>
             </div>
         </div>
         <div class="row" style="margin-top:5px">
@@ -172,6 +173,14 @@
             message = "Id card is not correct";
         }
         return message;
+    }
+    private void GenerateBarcode()
+    {
+        Guid guid = Guid.NewGuid();
+        string uniqueId = Convert.ToBase64String(guid.ToByteArray());
+        Client.Barcode = uniqueId.Replace("/", "").Replace("+", "").Substring(0, 13);
+        //uniqueId = uniqueId.Replace("/", "").Replace("+", "").Substring(0, 10);
+        //return uniqueId;
     }
     //private void Edit(string clientId)
     //{
