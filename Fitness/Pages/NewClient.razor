@@ -23,6 +23,7 @@
             <div class="col-md-8">
                 <input @bind="Client.Name" style="width:100%;" placeholder="Client name" />
             </div>
+            @*<ValidationMessage For="@(() => Client.Name)" />*@
         </div>
         <div class="row" style="margin-top:5px">
             <div class="col-md-4">
@@ -74,7 +75,9 @@
         </div>
     </div>
     <div class="col-md-6">
-        <button class="btn btn-primary">Buy Membership</button>
+        <NavLink class="nav-link" href="buymembership">
+            <span class="oi oi-plus" aria-hidden="true"></span> Buy Membership
+        </NavLink>
     </div>
 
    @* <div class="col-md-8">
@@ -145,8 +148,23 @@
         {
             message.Add(result);
         }
+        result = ValidationName(client.Name);
+        if (result.Length > 0)
+        {
+            message.Add(result);
+        }
         return message;
     }
+
+    private string ValidationName(String name)
+    {
+        int error = 0;
+        string message = "";
+        Regex rg = new Regex("[1-9]{1}[0-9]{12}");
+
+        return message;
+    }
+
     private string ValidationIdCard(String idcard)
     {
         int error = 0;
