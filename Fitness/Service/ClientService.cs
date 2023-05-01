@@ -33,7 +33,8 @@ namespace Fitness.Service
 
         public void SaveOrUpdate(Client client)
         {
-           var clientObj = _clientTable.Find(x => x.Id == client.Id).FirstOrDefault();
+            //var clientObj = _clientTable.Find(x => x.Id == client.Id).FirstOrDefault();
+            var clientObj = _clientTable.Find(x => x.Id == client.Id).FirstOrDefault();
             if (clientObj == null)
             {
                 _clientTable.InsertOne(client);
