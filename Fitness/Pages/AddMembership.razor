@@ -1,0 +1,205 @@
+﻿@page "/buymembership"
+
+@using Fitness.Data
+@inject Fitness.IService.ITypeOfMembership typeOfMembershipService
+@inject Fitness.IService.IGymService gymService
+<h3>Buy Membership</h3>
+<div>
+	<table class="table table-striped table-bordered">
+		<tr style="background-color:#2d364d ; color:#FFFFFF ;border-style:dashed;border-width:2px;border-color:0A2464;">
+			<td align="center"></td>
+			<td align="center">
+				Description
+			</td>
+			<td align="center">
+				Price
+			</td>
+			<td align="center">
+				Validity In Days
+			</td>
+			<td align="center">
+				Validity In Check In
+			</td>
+			<td align="center">
+				Gym id
+			</td>
+			<td align="center">
+				From Time
+			</td>
+			<td align="center">
+				To Time
+			</td>
+			<td align="center">
+				Nr Of Possible Usages Daily
+			</td>
+			<td></td>
+		</tr>
+		<tr style="height: 30px; background-color:#336699 ; color:#FFFFFF ;">
+			<td align="center">
+				<span class="oi oi-magnifying-glass" aria-hidden="true"></span>
+			</td>
+			<td align="center">
+				<input onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			</td>
+			<td align="center">
+				<input onchange=@OnPriceChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			</td>
+			<td align="center">
+				<input onchange=@OnValidityInDaysChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			</td>
+			<td align="center">
+				<input onchange=@OnValidityInCheckInChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			</td>
+			<td align="center">
+				<input onchange=@OnGymIdChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			</td>
+		</tr>
+		<tbody>
+			@foreach (var Membership in TypeOfMemberships)
+			{
+				<tr>
+					<td align="center"></td>
+					<td align="center">
+						<span>
+							@Membership.Description
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.Price
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.ValidityInDays
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.ValidityInCheckIn
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.GymId
+							@*@getgymname(membership.gymid)*@
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.FromTime
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.ToTime
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.NrOfPossibleUsagesDaily
+						</span>
+					</td>
+					<td>
+						<button class="btn btn-primary" @onclick="@(e=>Buy(Membership.Id))">Buy</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+@code {
+	public List<TypeOfMembership> TypeOfMemberships = new List<TypeOfMembership>();
+	string description = "";
+
+	protected override void OnInitialized()
+	{
+		TypeOfMemberships = typeOfMembershipService.GetTypeOfMemberships();
+	}
+
+	void OnDescriptionChanged(ChangeEventArgs args)
+	{
+		string values = args.Value.ToString();
+		studentFilteringList(values, "Description");
+	}
+
+
+	// For Filtering by Price
+	void OnPriceChanged(ChangeEventArgs args)
+	{
+		string values = args.Value.ToString();
+		studentFilteringList(values, "Price");
+	}
+
+	// For Filtering by ValidityInCheckIn
+	void OnValidityInDaysChanged(ChangeEventArgs args)
+	{
+		string values = args.Value.ToString();
+		studentFilteringList(values, "ValidityInDays");
+	}
+
+
+	// For Filtering by ValidityInCheckIn
+	void OnValidityInCheckInChanged(ChangeEventArgs args)
+	{
+		string values = args.Value.ToString();
+		studentFilteringList(values, "ValidityInCheckIn");
+	}
+
+
+	// For Filtering by Adress
+	void OnGymIdChanged(ChangeEventArgs args)
+	{
+		string values = args.Value.ToString();
+		studentFilteringList(values, "GymId");
+	}
+
+	//Filtering
+	protected async Task studentFilteringList(String Value, string columnName)
+	{
+
+		if (Value.Trim().Length > 0)
+		{
+			switch (columnName)
+			{
+				case "Description":
+					TypeOfMemberships = TypeOfMemberships.Where(x => x.Description.Contains(Value)).ToList();
+					break;
+				case "Price":
+					TypeOfMemberships = TypeOfMemberships.Where(x => x.Price.Equals(Value)).ToList();
+					break;
+				case "ValidityInDays":
+					TypeOfMemberships = TypeOfMemberships.Where(x => x.ValidityInDays.Equals(Value)).ToList();
+					break;
+				case "ValidityInCheckIn":
+					TypeOfMemberships = TypeOfMemberships.Where(x => x.ValidityInCheckIn.Equals(Value)).ToList();
+					break;
+				case "GymId":
+					TypeOfMemberships = TypeOfMemberships.Where(x => x.GymId.Contains(Value)).ToList();
+					break;
+				default:
+					TypeOfMemberships = typeOfMembershipService.GetTypeOfMemberships();
+					break;
+			}
+		}
+		else
+		{
+			TypeOfMemberships = typeOfMembershipService.GetTypeOfMemberships();
+		}
+	}
+
+	private string getGymName(string gymId)
+	{
+		Console.Write(gymId);
+		//gymId = gymId.Remove(1,2);
+		Gym gym = gymService.GetGym(gymId);
+		Console.Write(gym);
+		return gym.Name;
+	}
+	private void Buy(string typeOfMembershipId)
+	{
+		
+	}
+
+}

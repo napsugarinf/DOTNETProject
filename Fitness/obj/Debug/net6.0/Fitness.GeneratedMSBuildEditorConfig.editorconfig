@@ -20,12 +20,20 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/AddMembership.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkTWVtYmVyc2hpcC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/ClientDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xpZW50RGV0YWlscy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/Gyms.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR3ltcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/Index.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/NewClient.razor]

@@ -1,0 +1,158 @@
+﻿@page "/clientdetails"
+@page "/{ClientId:String}"
+<PageTitle>Client Details</PageTitle>
+
+@using Fitness.Data
+@using System.Text.RegularExpressions;
+@inject Fitness.IService.IClientService clientService
+
+
+<div class="row">
+    <div class="col-md-4">
+        <EditForm Model="@Client" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <div class="row" style="margin-top:5px">
+                <div class="col-md-4">
+                    <label> Id card: </label>
+                </div>
+                <div class="col-md-8">
+                    <input @bind="Client.IdCard" style="width:100%;" placeholder="Client id card" />
+                    <ValidationMessage For="@(() => Client.IdCard)" />
+                </div>
+            </div>
+            <div class="row" style="margin-top:5px">
+                <div class="col-md-4">
+                    <label> Name: </label>
+                </div>
+                <div class="col-md-8">
+                    <input @bind="Client.Name" style="width:100%;" placeholder="Client name" />
+                    <ValidationMessage For="@(() => Client.Name)" />
+                </div>
+            </div>
+            <div class="row" style="margin-top:5px">
+                <div class="col-md-4">
+                    <label> Phone Number: </label>
+                </div>
+                <div class="col-md-8">
+                    <input @bind="Client.PhoneNr" style="width:100%;" placeholder="ex. +40*********" />
+                    <ValidationMessage For="@(() => Client.PhoneNr)" />
+                </div>
+            </div>
+            <div class="row" style="margin-top:5px">
+                <div class="col-md-4">
+                    <label> Email: </label>
+                </div>
+                <div class="col-md-8">
+                    <input @bind="Client.Email" style="width:100%;" placeholder=" ex. name@gmail.com" />
+                    <ValidationMessage For="@(() => Client.Email)" />
+                </div>
+            </div>
+            <div class="row" style="margin-top:5px">
+                <div class="col-md-4">
+                    <label> Address: </label>
+                </div>
+                <div class="col-md-8">
+                    <input @bind="Client.Address" style="width:100%;" placeholder="nr. str. city" />
+                    <ValidationMessage For="@(() => Client.Address)" />
+                </div>
+            </div>
+            <div class="row" style="margin-top:5px">
+                <div class="col-md-4">
+                    <label> Barcode: </label>
+                </div>
+                <div class="col-md-8">
+                    <button type="button" class="btn btn-primary" @onclick="@(e=>GenerateBarcode())">Generate barcode</button>
+                    <label>@Client.Barcode</label>
+                    <ValidationMessage For="@(() => Client.Barcode)" />
+                </div>
+            </div>
+            <div class="row" style="margin-top:5px">
+                <div class="col-md-4">
+                    <label> Additional Information: </label>
+                </div>
+                <div class="col-md-8">
+                    <textarea @bind="Client.AdditionanInformation" style="width:100%;" placeholder="Additional information" />
+                </div>
+            </div>
+            <div class="row" style="margin-top:5px">
+                <div class="col-md-4"> </div>
+                <div class="col-md-8">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <button type="button" class="btn btn-primary" @onclick="@(e=>Reset())" style="float:right; margin-right:10px; background-color:red">Reset</button>
+                </div>
+            </div>
+
+
+        </EditForm>
+
+    </div>
+    <div class="alert alert-primary @HideAlert" role="alert">
+        @AlertContent
+    </div>
+
+</div>
+
+@code {
+    Client Client = new Client();
+    List<Client> Clients = new List<Client>();
+
+    [Parameter]
+    public string? ClientId { get; set; }
+
+    protected override void OnInitialized()
+    {
+        GetClients();
+    }
+    private void GetClients()
+    {
+        Clients = clientService.GetClients();
+    }
+    private async Task HandleValidSubmit()
+    {
+        EditContext editContext = new EditContext(Client);
+        var isValid = editContext.Validate();
+        if (isValid)
+        {
+            Client.InsertedByDate = DateTime.Now;
+            clientService.SaveOrUpdate(Client);
+            DoSomething();
+            Reset();
+        }
+        GetClients();
+    }
+    private void Reset()
+    {
+        Client = new Client();
+
+    }
+    private void GenerateBarcode()
+    {
+        Guid guid = Guid.NewGuid();
+        string uniqueId = Convert.ToBase64String(guid.ToByteArray());
+        Client.Barcode = uniqueId.Replace("/", "").Replace("+", "").Substring(0, 13);
+        //uniqueId = uniqueId.Replace("/", "").Replace("+", "").Substring(0, 10);
+        //return uniqueId;
+    }
+    private void Delete(string clientId)
+    {
+        clientService.Delete(clientId);
+        GetClients();
+    }
+
+    private string HideAlert { get; set; } = "d-none";
+    private string AlertContent { get; set; } = "This is a primary alert—check it out!";
+    private void DoSomething()
+    {
+        if (HideAlert == "")
+        {
+            HideAlert = "d-none";
+            AlertContent = "This is a primary alert—check it out!";
+        }
+        else
+        {
+            HideAlert = "";
+            AlertContent = "The save is successful";
+        }
+    }
+
+}
