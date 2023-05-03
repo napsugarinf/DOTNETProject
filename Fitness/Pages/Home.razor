@@ -1,0 +1,186 @@
+﻿@page "/"
+
+@using Fitness.Data
+@inject Fitness.IService.IClientService clientService
+
+
+@*<div class="row">
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-md-4">
+                <label> Name: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="Client.Name" style="width:100%;" placeholder="Client Name" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label> IdCard: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="Client.IdCard" style="width:100%;" placeholder="Client Id" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label> Phone Number: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="Client.PhoneNr" style="width:100%;" placeholder="Phone nr" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label> Email: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="Client.Email" style="width:100%;" placeholder="Email" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"> </div>
+            <div class="col-md-8">
+                <button class="btn btn-primary" @onclick="@(e=>Save())">Save</button>
+                <button class="btn btn-primary" @onclick="@(e=>Reset())" style="float:right;">Reset</button>
+            </div>
+        </div>
+    </div>
+
+</div>*@
+
+<div class="row">
+   
+   
+    <div class="col-md-8">
+        <table class="table table-striped table-bordered">
+            <thead>
+
+            <td align="center">
+                <span class="oi oi-magnifying-glass" aria-hidden="true"></span>
+            </td>
+            <td align="center">
+                <input onchange=@OnClientNameChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+            </td>
+            <td align="center">
+                <input onchange=@OnIdCardChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+            </td>
+                <tr>
+                    <th>    </th>
+                    <th>Name  </th>
+                    <th>Id Card </th>
+                    <th>Phone Number  </th>
+                    <th>Email   </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Clients.Count() > 0)
+                {
+                    @foreach (var cli in Clients)
+                    {
+                    <tr>
+                            <td> </td>
+                            <td>@cli.Name</td>
+                            <td>@cli.IdCard</td>
+                            <td>@cli.PhoneNr</td>
+                            <td>@cli.Email</td>
+                            <td>
+                               @*  <NavLink class="nav-link" href="clientdetails">
+                                    <span class="edit" aria-hidden="true"></span> Edit
+                                </NavLink> *@
+
+                                <button class="btn btn-primary" @onclick="() => ButtonHandler()">Edit</button>
+                            </td>
+                           
+                    </tr>    
+                    }
+
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+@code{
+    Client Client = new Client();
+    List<Client> Clients = new List<Client>();
+    protected override async Task OnInitializedAsync()
+    {
+        GetClients();  
+
+    }
+    private void GetClients()
+    {
+        Clients = clientService.GetClients();    
+    }
+    private void Save()
+    {
+        clientService.SaveOrUpdate(Client);
+        Reset();
+        GetClients();
+    }
+    private void Reset()
+    {
+        Client = new Client();
+
+    }
+    private void Edit(string clientId)
+    {
+       
+        
+        
+        //Client = clientService.GetClient(clientId);
+    }
+    private void Delete(string clientId)
+    {
+        clientService.Delete(clientId);
+        GetClients();
+    }
+    void OnClientNameChanged(ChangeEventArgs args)
+    {
+        string values = args.Value.ToString();
+        userFilteringList(values, "Name");
+    }
+    void OnIdCardChanged(ChangeEventArgs args)
+    {
+        string values = args.Value.ToString();
+        userFilteringList(values, "IdCard");
+    }
+    protected async Task userFilteringList(String Value, string columnName)
+    {
+        {
+
+            if (Value.Trim().Length > 0)
+            {
+                switch (columnName)
+                {
+                    case "Name":
+                        Clients = Clients.Where(x => x.Name.Contains(Value)).ToList();
+                        break;
+                    case "IdCard":
+                        Clients = Clients.Where(x => x.IdCard.Contains(Value)).ToList();
+                        break;
+
+                }
+            }
+            else
+            {
+                Clients = clientService.GetClients();
+            }
+        }
+    }
+    @inject NavigationManager navigationManager
+    private void ButtonHandler()
+    {
+        navigationManager
+             .NavigateTo($"/clientdetails/{Client.Id}");
+    }
+}
