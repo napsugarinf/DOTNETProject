@@ -99,7 +99,8 @@
                     <th>Name  </th>
                     <th>Phone Number  </th>
                     <th>Email   </th>
-
+                    <th>Inserted By Date</th>
+                    <th>Is Deleted</th>
                 </tr>
             </thead>
             <tbody>
@@ -113,6 +114,7 @@
                             <td>@cli.PhoneNr</td>
                             <td>@cli.Email</td>
                             <td>@cli.InsertedByDate</td>
+                            <td>@cli.IsDeleted</td>
                             <td>
                                 <button class="btn btn-primary" @onclick="@(e=>Delete(cli.Id))">Delete</button>
                             </td>
@@ -145,9 +147,7 @@
         var isValid = editContext.Validate();
         if (isValid )
         {
-            Client.InsertedByDate = DateTime.Now;
-            Client.IsDeleted = false;
-            clientService.SaveOrUpdate(Client);
+            await clientService.SaveAsync(Client);
             clientIsSave = true;
             DoSomthing();
             Reset();
@@ -194,9 +194,10 @@
     }
     private void ButtonHandler()
     {
+        //clientIsSave = true;
         if (clientIsSave)
         {
-            Client.Id = "6450efa29c48a4ce38e6f32b";
+            //Client.Id = "6450efa29c48a4ce38e6f32b";
             navigationManager
              .NavigateTo($"/buymembership/{Client.Id}");
         }

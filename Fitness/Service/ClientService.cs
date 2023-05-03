@@ -31,16 +31,26 @@ namespace Fitness.Service
             return _clientTable.Find(FilterDefinition<Client>.Empty).ToList();
         }
 
+        public async Task SaveAsync(Client client)
+        {
+            client.InsertedByDate = DateTime.Now;
+            client.IsDeleted = false;
+            await _clientTable.InsertOneAsync(client);
+            
+        }
+
         public void SaveOrUpdate(Client client)
         {
-            //var clientObj = _clientTable.Find(x => x.Id == client.Id).FirstOrDefault();
             var clientObj = _clientTable.Find(x => x.Id == client.Id).FirstOrDefault();
             if (clientObj == null)
             {
+                client.InsertedByDate = DateTime.Now;
+                client.IsDeleted = false;
                 _clientTable.InsertOne(client);
             }
-            else {
-                _clientTable.ReplaceOne(x => x.Id == client.Id, client);
+            else
+            {
+               _clientTable.ReplaceOne(x => x.Id == client.Id, client);
             }
         }
     }
