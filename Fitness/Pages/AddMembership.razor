@@ -1,4 +1,4 @@
-﻿@page "/buymembership"
+﻿@page "/buymembership/{clientId}"
 
 @using Fitness.Data
 @inject Fitness.IService.ITypeOfMembership typeOfMembershipService
@@ -112,6 +112,8 @@
 @code {
 	public List<TypeOfMembership> TypeOfMemberships = new List<TypeOfMembership>();
 	string description = "";
+	[Parameter]
+	public string clientId{ get; set; }
 
 	protected override void OnInitialized()
 	{

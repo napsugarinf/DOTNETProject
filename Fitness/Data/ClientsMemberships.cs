@@ -6,8 +6,8 @@ namespace Fitness.Data
 {
     public class ClientsMemberships
     {
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; } = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
+        [BsonId]
+        public string ClientsMembershipsId { get; set; }
         public string ClientId { get; set; }
 
         public string MembershipId { get; set; }
