@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "14YFBloS+lYypaAmRNLcJA9YvWiw+lWhRLbGFqZJObM=",
+  "Hash": "wRPfh0UYgG8VwHQf4IiYh1YeutszOIHNeS+t5sbiSLg=",
   "Source": "Fitness",
   "BasePath": "_content/Fitness",
   "Mode": "Default",
@@ -270,6 +270,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\webcamjs\\Configuration.js",
+      "SourceId": "Fitness",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
+      "BasePath": "_content/Fitness",
+      "RelativePath": "webcamjs/Configuration.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\webcamjs\\Configuration.js"
+    },
+    {
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\webcamjs\\webcam.min.js",
+      "SourceId": "Fitness",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
+      "BasePath": "_content/Fitness",
+      "RelativePath": "webcamjs/webcam.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\webcamjs\\webcam.min.js"
     }
   ]
 }
