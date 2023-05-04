@@ -21,7 +21,7 @@
 				Validity In Check In
 			</td>
 			<td align="center">
-				Gym id
+				Gym 
 			</td>
 			<td align="center">
 				From Time
@@ -32,7 +32,6 @@
 			<td align="center">
 				Nr Of Possible Usages Daily
 			</td>
-			<td></td>
 		</tr>
 		<tr style="height: 30px; background-color:#336699 ; color:#FFFFFF ;">
 			<td align="center">
@@ -57,7 +56,7 @@
 		<tbody>
 			@foreach (var Membership in TypeOfMemberships)
 			{
-				<tr>
+				<tr @onclick="() => Select(Membership)">
 					<td align="center"></td>
 					<td align="center">
 						<span>
@@ -81,18 +80,17 @@
 					</td>
 					<td align="center">
 						<span>
-							@Membership.GymId
-							@*@getgymname(membership.gymid)*@
+							@getGymName(Membership.GymId)
 						</span>
 					</td>
 					<td align="center">
 						<span>
-							@Membership.FromTime
+							@Membership.FromTime.ToString(@"hh\:mm")
 						</span>
 					</td>
 					<td align="center">
 						<span>
-							@Membership.ToTime
+							@Membership.ToTime.ToString(@"hh\:mm")
 						</span>
 					</td>
 					<td align="center">
@@ -100,13 +98,25 @@
 							@Membership.NrOfPossibleUsagesDaily
 						</span>
 					</td>
-					<td>
-						<button class="btn btn-primary" @onclick="@(e=>Buy(Membership.Id))">Buy</button>
-					</td>
 				</tr>
 			}
 		</tbody>
 	</table>
+	@if (typeOfMembership != null)
+	{
+		<div class="col">
+			<ul>
+				<li><b>Description</b> - @typeOfMembership.Description</li>
+				<li><b>Price</b> - @typeOfMembership.Price</li>
+				<li><b>Validity In Days</b> - @typeOfMembership.ValidityInDays</li>
+				<li><b>Validity In Check In</b> - @typeOfMembership.ValidityInCheckIn</li>
+				<li><b>Gym</b> - @getGymName(typeOfMembership.GymId)</li>
+				<li>@typeOfMembership.FromTime.ToString(@"hh\:mm") - @typeOfMembership.ToTime.ToString(@"hh\:mm")</li>
+				<li><b>Nr Of Possible Usages Daily</b> - @typeOfMembership.NrOfPossibleUsagesDaily</li>
+			</ul>
+			<button class="btn btn-primary" @onclick="@(e=>Buy(typeOfMembership.Id))">Buy</button>
+		</div>
+	}
 </div>
 
 @code {
@@ -114,10 +124,15 @@
 	string description = "";
 	[Parameter]
 	public string clientId{ get; set; }
+	private TypeOfMembership typeOfMembership;
 
-	protected override void OnInitialized()
+	protected async override Task OnInitializedAsync()
 	{
-		TypeOfMemberships = typeOfMembershipService.GetTypeOfMemberships();
+		var result = await typeOfMembershipService.GetTypeOfMembershipsAsync();
+		if(result != null)
+		{
+			TypeOfMemberships = result;
+		}
 	}
 
 	void OnDescriptionChanged(ChangeEventArgs args)
@@ -169,16 +184,16 @@
 					TypeOfMemberships = TypeOfMemberships.Where(x => x.Description.Contains(Value)).ToList();
 					break;
 				case "Price":
-					TypeOfMemberships = TypeOfMemberships.Where(x => x.Price.Equals(Value)).ToList();
+					TypeOfMemberships = TypeOfMemberships.Where(x => x.Price.Equals(Convert.ToDouble(Value))).ToList();
 					break;
 				case "ValidityInDays":
-					TypeOfMemberships = TypeOfMemberships.Where(x => x.ValidityInDays.Equals(Value)).ToList();
+					TypeOfMemberships = TypeOfMemberships.Where(x => x.ValidityInDays.Equals(Int32.Parse(Value))).ToList();
 					break;
 				case "ValidityInCheckIn":
-					TypeOfMemberships = TypeOfMemberships.Where(x => x.ValidityInCheckIn.Equals(Value)).ToList();
+					TypeOfMemberships = TypeOfMemberships.Where(x => x.ValidityInCheckIn.Equals(Int32.Parse(Value))).ToList();
 					break;
 				case "GymId":
-					TypeOfMemberships = TypeOfMemberships.Where(x => x.GymId.Contains(Value)).ToList();
+					TypeOfMemberships = TypeOfMemberships.Where(x => getGymName(x.GymId).Contains(Value)).ToList();
 					break;
 				default:
 					TypeOfMemberships = typeOfMembershipService.GetTypeOfMemberships();
@@ -199,9 +214,14 @@
 		Console.Write(gym);
 		return gym.Name;
 	}
-	private void Buy(string typeOfMembershipId)
+	private void Select(TypeOfMembership membership)
 	{
-		
+		typeOfMembership = membership;
+	}
+	private async void Buy(string typeOfMembershipId)
+	{
+		TypeOfMembership selectedMembership = await typeOfMembershipService.GetTypeOfMembershipAsync(typeOfMembershipId);
+
 	}
 
 }

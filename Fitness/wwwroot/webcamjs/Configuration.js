@@ -1,8 +1,8 @@
 ﻿function ready() {
     if (document.readyState == 'complete') {
         Webcam.set({
-            with: 280,
-            height: 280,
+            with: 320,
+            height: 240,
             image_format: 'jpeg',
             jpeg_quality: 90
         });

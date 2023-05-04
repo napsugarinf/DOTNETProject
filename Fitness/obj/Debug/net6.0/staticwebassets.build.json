@@ -1,10 +1,6 @@
 {
   "Version": 1,
-<<<<<<< HEAD
   "Hash": "wRPfh0UYgG8VwHQf4IiYh1YeutszOIHNeS+t5sbiSLg=",
-=======
-  "Hash": "J6NsVRPQY0gBgXuWhpsFqNt43DmmHNwiexNVC56DGtQ=",
->>>>>>> ff14fe453c3b27b7b346abb62de86e3e63b58861
   "Source": "Fitness",
   "BasePath": "_content/Fitness",
   "Mode": "Default",
@@ -14,17 +10,17 @@
     {
       "Name": "Fitness\\wwwroot",
       "Source": "Fitness",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Fitness.styles.css",
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Fitness.styles.css",
       "SourceId": "Fitness",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "Fitness.styles.css",
       "AssetKind": "All",
@@ -35,13 +31,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Fitness.styles.css"
+      "OriginalItemSpec": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Fitness.styles.css"
     },
     {
-      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Fitness.bundle.scp.css",
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Fitness.bundle.scp.css",
       "SourceId": "Fitness",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "Fitness.bundle.scp.css",
       "AssetKind": "All",
@@ -52,13 +48,13 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Fitness.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Fitness.bundle.scp.css"
     },
     {
-      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "SourceId": "Fitness",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "css/bootstrap/bootstrap.min.css",
       "AssetKind": "All",
@@ -72,10 +68,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "Fitness",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "css/bootstrap/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -89,10 +85,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "SourceId": "Fitness",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "css/open-iconic/font/css/open-iconic-bootstrap.min.css",
       "AssetKind": "All",
@@ -106,10 +102,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
     },
     {
-      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "SourceId": "Fitness",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.eot",
       "AssetKind": "All",
@@ -123,10 +119,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
     },
     {
-      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "SourceId": "Fitness",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.otf",
       "AssetKind": "All",
@@ -140,10 +136,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
     },
     {
-      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "SourceId": "Fitness",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.svg",
       "AssetKind": "All",
@@ -157,10 +153,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
     },
     {
-      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "SourceId": "Fitness",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.ttf",
       "AssetKind": "All",
@@ -174,10 +170,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
     },
     {
-      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "SourceId": "Fitness",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.woff",
       "AssetKind": "All",
@@ -191,10 +187,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
     },
     {
-      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "SourceId": "Fitness",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "css/open-iconic/FONT-LICENSE",
       "AssetKind": "All",
@@ -208,10 +204,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
     },
     {
-      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "SourceId": "Fitness",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "css/open-iconic/ICON-LICENSE",
       "AssetKind": "All",
@@ -225,10 +221,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\ICON-LICENSE"
     },
     {
-      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\README.md",
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\README.md",
       "SourceId": "Fitness",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "css/open-iconic/README.md",
       "AssetKind": "All",
@@ -242,10 +238,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\README.md"
     },
     {
-      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\css\\site.css",
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\css\\site.css",
       "SourceId": "Fitness",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -259,10 +255,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\favicon.ico",
+      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\favicon.ico",
       "SourceId": "Fitness",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",

@@ -31,7 +31,19 @@ namespace Fitness.Service
            return _typeOfMembershipTable.Find(FilterDefinition<TypeOfMembership>.Empty).ToList();
         }
 
-        public void SaveOrUpdate(TypeOfMembership typeOfMembership)
+		public async Task<TypeOfMembership> GetTypeOfMembershipAsync(string typeOfMembershipId)
+		{
+			var result = await _typeOfMembershipTable.FindAsync(x => x.Id == typeOfMembershipId);
+            return result.FirstOrDefault();
+		}
+
+		public async Task<List<TypeOfMembership>> GetTypeOfMembershipsAsync()
+		{
+			var result = await _typeOfMembershipTable.FindAsync(FilterDefinition<TypeOfMembership>.Empty);
+            return result.ToList();
+		}
+
+		public void SaveOrUpdate(TypeOfMembership typeOfMembership)
         {
             var typeOfMembershipObj = _typeOfMembershipTable.Find(x => x.Id == typeOfMembership.Id).FirstOrDefault();
             if (typeOfMembershipObj == null)
