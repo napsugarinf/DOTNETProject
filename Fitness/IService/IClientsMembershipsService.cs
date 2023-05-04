@@ -6,5 +6,6 @@ namespace Fitness.IService
     {
 		Task SaveAsync(ClientsMemberships clientsMemberships);
 		Task<List<ClientsMemberships>> GetClientsMembershipsAsync();
+		string Delete(string clientMembershipId);
 	}
 }
