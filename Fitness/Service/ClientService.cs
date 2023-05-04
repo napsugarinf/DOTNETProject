@@ -26,12 +26,24 @@ namespace Fitness.Service
             return _clientTable.Find(x => x.Id == clientId).FirstOrDefault();
         }
 
-        public List<Client> GetClients()
+		public async Task<Client> GetClientAsync(string clientId)
+		{
+			var result = await _clientTable.FindAsync(x => x.Id == clientId);
+            return result.FirstOrDefault();
+		}
+
+		public List<Client> GetClients()
         {
             return _clientTable.Find(FilterDefinition<Client>.Empty).ToList();
         }
 
-        public async Task SaveAsync(Client client)
+		public async Task<List<Client>> GetClientsAsync()
+		{
+			var result = await _clientTable.FindAsync(FilterDefinition<Client>.Empty);
+            return result.ToList();
+		}
+
+		public async Task SaveAsync(Client client)
         {
             client.InsertedByDate = DateTime.Now;
             client.IsDeleted = false;

@@ -8,7 +8,11 @@ namespace Fitness.IService
 
         Task SaveAsync(Client client);
         Client GetClient(string clientId);
-        List<Client> GetClients();
+        Task<Client> GetClientAsync(string clientId);
+
+		List<Client> GetClients();
+
+        Task<List<Client>> GetClientsAsync();
 
         string Delete(string clientId);
 

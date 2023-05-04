@@ -13,6 +13,7 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<ITypeOfMembership, TypeOfMembershipService>();
 builder.Services.AddScoped<IGymService, GymService>();
+builder.Services.AddScoped<IClientsMembershipsService, ClientsMembershipsService>();
 
 var app = builder.Build();
 

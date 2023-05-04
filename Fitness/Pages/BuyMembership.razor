@@ -3,6 +3,9 @@
 @using Fitness.Data
 @inject Fitness.IService.ITypeOfMembership typeOfMembershipService
 @inject Fitness.IService.IGymService gymService
+@inject Fitness.IService.IClientService clientService
+@inject Fitness.IService.IClientsMembershipsService clientsMembershipsService
+
 <h3>Buy Membership</h3>
 <div>
 	<table class="table table-striped table-bordered">
@@ -113,10 +116,54 @@
 				<li><b>Gym</b> - @getGymName(typeOfMembership.GymId)</li>
 				<li>@typeOfMembership.FromTime.ToString(@"hh\:mm") - @typeOfMembership.ToTime.ToString(@"hh\:mm")</li>
 				<li><b>Nr Of Possible Usages Daily</b> - @typeOfMembership.NrOfPossibleUsagesDaily</li>
+				<li><input type="date" @oninput="ValueChanged" /></li>
 			</ul>
-			<button class="btn btn-primary" @onclick="@(e=>Buy(typeOfMembership.Id))">Buy</button>
+			
 		</div>
+		<button class="btn btn-primary" @onclick="@(e=>Buy(typeOfMembership.Id))">Buy</button>
 	}
+	<div class="col-md-8">
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th> Id   </th>
+					<th> ClientId </th>
+					<th>MembershipId  </th>
+					<th>DateOfPurchasing  </th>
+					<th>Barcode</th>
+					<th>CheckInsSoFa</th>
+					<th>Price</th>
+					<th>Validity</th>
+					<th>DateOfFirstUse</th>
+					<th>GymId</th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (ClientsMembershipsList.Count() > 0)
+				{
+					@foreach (var cli in ClientsMembershipsList)
+					{
+						<tr>
+							<td>@cli.ClientsMembershipsId</td>
+							<td>@cli.ClientId</td>
+							<td>@cli.MembershipId</td>
+							<td>@cli.DateOfPurchasing</td>
+							<td>@cli.Barcode</td>
+							<td>@cli.CheckInsSoFa</td>
+							<td>@cli.Price</td>
+							<td>@cli.Validity</td>
+							<td>@cli.DateOfFirstUse</td>
+							<td>@cli.GymId</td>
+							<td>
+								@*<button class="btn btn-primary" @onclick="@(e=>Delete(cli.Id))">Delete</button>*@
+							</td>
+						</tr>
+					}
+
+				}
+			</tbody>
+		</table>
+	</div>
 </div>
 
 @code {
@@ -125,15 +172,20 @@
 	[Parameter]
 	public string clientId{ get; set; }
 	private TypeOfMembership typeOfMembership;
+	private DateTime selectDateOfFirstUse=DateTime.Now;
+	private List<ClientsMemberships> ClientsMembershipsList = new List<ClientsMemberships>();
 
 	protected async override Task OnInitializedAsync()
 	{
+		ClientsMembershipsList = await clientsMembershipsService.GetClientsMembershipsAsync();
 		var result = await typeOfMembershipService.GetTypeOfMembershipsAsync();
 		if(result != null)
 		{
 			TypeOfMemberships = result;
 		}
 	}
+
+
 
 	void OnDescriptionChanged(ChangeEventArgs args)
 	{
@@ -218,9 +270,46 @@
 	{
 		typeOfMembership = membership;
 	}
-	private async void Buy(string typeOfMembershipId)
+	private void ValueChanged(ChangeEventArgs e)
+	{
+		selectDateOfFirstUse = DateTime.Parse(e.Value.ToString());
+	}
+	/*private void Buy(string typeOfMembershipId)
+	{
+		//Console.WriteLine(selectDateOfFirstUse.ToString());
+	}*/
+	private async Task Buy(string typeOfMembershipId)
 	{
 		TypeOfMembership selectedMembership = await typeOfMembershipService.GetTypeOfMembershipAsync(typeOfMembershipId);
+		if (selectedMembership != null)
+		{
+			Client client = await clientService.GetClientAsync(clientId);
+			if (client != null)
+			{
+				ClientsMemberships clientsMemberships = new ClientsMemberships();
+				clientsMemberships.ClientId = client.Id;
+				clientsMemberships.MembershipId = selectedMembership.Id;
+				clientsMemberships.DateOfPurchasing = DateTime.Now;
+				clientsMemberships.Barcode = client.Barcode;
+				clientsMemberships.Price = selectedMembership.Price;
+				clientsMemberships.Validity = true;
+				clientsMemberships.GymId = selectedMembership.GymId;
+				if(selectDateOfFirstUse.Year == DateTime.Now.Year && 
+					selectDateOfFirstUse.Month == DateTime.Now.Month &&
+					selectDateOfFirstUse.Day == DateTime.Now.Day)
+				{
+					clientsMemberships.CheckInsSoFa = 1;
+
+				}
+				else
+				{
+					clientsMemberships.CheckInsSoFa = 0;
+				}
+				await clientsMembershipsService.SaveAsync(clientsMemberships);
+
+			}
+		}
+		ClientsMembershipsList = await clientsMembershipsService.GetClientsMembershipsAsync();
 
 	}
 
