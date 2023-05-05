@@ -1,13 +1,17 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Fitness</a>
+        <h3>
+            Fitness
+        </h3>
+        @* <a class="navbar-brand" href="">Fitness</a> *@
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+@*
+    <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
@@ -35,7 +39,26 @@
             </NavLink>
         </div>
     </nav>
+     <li class="active"><a href="home">Home</a></li>
 </div>
+
+*@
+
+
+<ul class="nav nav-pills nav-stacked">
+    <li class="active"><a href="">Welcome</a></li>
+    <li class="active"><a href="home">Home</a></li>
+    <li class="active"><a href="addnewclient">New Client</a></li>
+    <li class="active"><a href="addnewtypeofmembership">New Type of Membership</a></li>
+    <li class="active"><a href="gyms">Gyms</a></li>
+
+
+</ul>
+
+
+
+
+
 
 @code {
     private bool collapseNavMenu = true;

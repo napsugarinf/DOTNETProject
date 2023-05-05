@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
+      "Id": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\css\\bootstrap\\bootstrap2.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap2.min.css"
+    },
+    {
       "Id": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "PackagePath": "staticwebassets\\css\\open-iconic"
     },
