@@ -79,7 +79,7 @@
             </div>
             <div class="col-md-4" style="width:300px; height:300px; background-color:blue">
                 <div id ="results">Your image</div>
-                <img src="@imageUrl" alt="Alternate Text" width="200px;" height="200px;" />
+                    <img src="@imageUrl" alt="Alternate Text" style="width:300px; height:300px;" />
             </div>
         </div>
         <div class="row" style="margin-top:5px">
@@ -148,9 +148,7 @@
     Client Client = new Client();
     List<Client> Clients = new List<Client>();
     bool clientIsSave = false;
-    string imageDataUrl;
-    string imageUrl;
-    private object webcam;
+    string imageUrl="";
 
     protected override void OnInitialized()
     {
@@ -216,21 +214,10 @@
         clientIsSave = true;
         if (clientIsSave)
         {
-            Client.Id = "6450efa29c48a4ce38e6f32b";
+            Client.Id = "64523d069a001465a6b9f99f";
             navigationManager
              .NavigateTo($"/buymembership/{Client.Id}");
         }
-
-    }
-
-    private async Task OnInputFileChange(InputFileChangeEventArgs e)
-    {
-        var imageFile = e.GetMultipleFiles().FirstOrDefault();
-        var type = "image/png";
-        var resizedImageFile = await imageFile.RequestImageFileAsync(type, 100, 100);
-        var buffer = new byte[resizedImageFile.Size];
-        await resizedImageFile.OpenReadStream().ReadAsync(buffer);
-        imageDataUrl = $"data:{type};base64,{Convert.ToBase64String(buffer)}";
 
     }
 
@@ -244,5 +231,6 @@
         if(firstRender){
             JSRuntime.InvokeVoidAsync("ready",this);
         }
+
     }
 }

@@ -7,7 +7,12 @@ namespace Fitness.IService
 
             void SaveOrUpdate(TypeOfMembership typeOfMembership);
             TypeOfMembership GetTypeOfMembership(string typeOfMembershipId);
-            List<TypeOfMembership> GetTypeOfMemberships();
+		    
+            Task<TypeOfMembership> GetTypeOfMembershipAsync(string typeOfMembershipId);
+
+            Task<List<TypeOfMembership>> GetTypeOfMembershipsAsync();
+
+		    List<TypeOfMembership> GetTypeOfMemberships();
             string Delete(string typeOfMembershipId);
 
         }

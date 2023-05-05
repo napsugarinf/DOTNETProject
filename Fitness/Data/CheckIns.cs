@@ -6,6 +6,7 @@ namespace Fitness.Data
 	public class CheckIns
 	{
 		[BsonId]
+		[BsonRepresentation(BsonType.ObjectId)]
 		public string CheckInId { get; set; } 
 
 		public string ClientId { get; set; }

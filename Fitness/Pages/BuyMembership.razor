@@ -1,0 +1,346 @@
+﻿@page "/buymembership/{clientId}"
+
+@using Fitness.Data
+@inject Fitness.IService.ITypeOfMembership typeOfMembershipService
+@inject Fitness.IService.IGymService gymService
+@inject Fitness.IService.IClientService clientService
+@inject Fitness.IService.IClientsMembershipsService clientsMembershipsService
+@inject Fitness.IService.ICheckInService checkInService
+
+<h3>Buy Membership</h3>
+<div>
+	<table class="table table-striped table-bordered">
+		<tr style="background-color:#2d364d ; color:#FFFFFF ;border-style:dashed;border-width:2px;border-color:0A2464;">
+			<td align="center"></td>
+			<td align="center">
+				Description
+			</td>
+			<td align="center">
+				Price
+			</td>
+			<td align="center">
+				Validity In Days
+			</td>
+			<td align="center">
+				Validity In Check In
+			</td>
+			<td align="center">
+				Gym 
+			</td>
+			<td align="center">
+				From Time
+			</td>
+			<td align="center">
+				To Time
+			</td>
+			<td align="center">
+				Nr Of Possible Usages Daily
+			</td>
+		</tr>
+		<tr style="height: 30px; background-color:#336699 ; color:#FFFFFF ;">
+			<td align="center">
+				<span class="oi oi-magnifying-glass" aria-hidden="true"></span>
+			</td>
+			<td align="center">
+				<input onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			</td>
+			<td align="center">
+				<input onchange=@OnPriceChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			</td>
+			<td align="center">
+				<input onchange=@OnValidityInDaysChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			</td>
+			<td align="center">
+				<input onchange=@OnValidityInCheckInChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			</td>
+			<td align="center">
+				<input onchange=@OnGymIdChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			</td>
+		</tr>
+		<tbody>
+			@foreach (var Membership in TypeOfMemberships)
+			{
+				<tr @onclick="() => Select(Membership)">
+					<td align="center"></td>
+					<td align="center">
+						<span>
+							@Membership.Description
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.Price
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.ValidityInDays
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.ValidityInCheckIn
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@getGymName(Membership.GymId)
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.FromTime.ToString(@"hh\:mm")
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.ToTime.ToString(@"hh\:mm")
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.NrOfPossibleUsagesDaily
+						</span>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	@if (typeOfMembership != null)
+	{
+		<div class="col">
+			<ul>
+				<li><b>Description</b> - @typeOfMembership.Description</li>
+				<li><b>Price</b> - @typeOfMembership.Price</li>
+				<li><b>Validity In Days</b> - @typeOfMembership.ValidityInDays</li>
+				<li><b>Validity In Check In</b> - @typeOfMembership.ValidityInCheckIn</li>
+				<li><b>Gym</b> - @getGymName(typeOfMembership.GymId)</li>
+				<li>@typeOfMembership.FromTime.ToString(@"hh\:mm") - @typeOfMembership.ToTime.ToString(@"hh\:mm")</li>
+				<li><b>Nr Of Possible Usages Daily</b> - @typeOfMembership.NrOfPossibleUsagesDaily</li>
+				<li><input type="date" @oninput="ValueChanged" /></li>
+			</ul>
+			
+		</div>
+		<button class="btn btn-primary" @onclick="@(e=>Buy(typeOfMembership.Id))">Buy</button>
+		@if (purchased)
+		{
+			<p>	Successful purchase
+				<span class="oi oi-circle-check" aria-hidden="true" style="color:green"></span>
+			</p>
+		}
+	}
+	<div class="col-md-8">
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th> Id   </th>
+					<th> ClientId </th>
+					<th>MembershipId  </th>
+					<th>DateOfPurchasing  </th>
+					<th>Barcode</th>
+					<th>CheckInsSoFa</th>
+					<th>Price</th>
+					<th>Validity</th>
+					<th>DateOfFirstUse</th>
+					<th>GymId</th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (ClientsMembershipsList.Count() > 0)
+				{
+					@foreach (var cli in ClientsMembershipsList)
+					{
+						<tr>
+							<td>@cli.ClientsMembershipsId</td>
+							<td>@cli.ClientId</td>
+							<td>@cli.MembershipId</td>
+							<td>@cli.DateOfPurchasing</td>
+							<td>@cli.Barcode</td>
+							<td>@cli.CheckInsSoFa</td>
+							<td>@cli.Price</td>
+							<td>@cli.Validity</td>
+							<td>@cli.DateOfFirstUse</td>
+							<td>@cli.GymId</td>
+							<td>
+								<button class="btn btn-primary" @onclick="@(e=>Delete(cli.ClientsMembershipsId))">Delete</button>
+							</td>
+						</tr>
+					}
+
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+@code {
+	public List<TypeOfMembership> TypeOfMemberships = new List<TypeOfMembership>();
+	string description = "";
+	[Parameter]
+	public string clientId{ get; set; }
+	private TypeOfMembership typeOfMembership;
+	private DateTime selectDateOfFirstUse=DateTime.Now;
+	private List<ClientsMemberships> ClientsMembershipsList = new List<ClientsMemberships>();
+	bool purchased;
+
+	protected async override Task OnInitializedAsync()
+	{
+		ClientsMembershipsList = await clientsMembershipsService.GetClientsMembershipsAsync();
+		var result = await typeOfMembershipService.GetTypeOfMembershipsAsync();
+		if(result != null)
+		{
+			TypeOfMemberships = result;
+		}
+	}
+
+
+
+	void OnDescriptionChanged(ChangeEventArgs args)
+	{
+		string values = args.Value.ToString();
+		studentFilteringList(values, "Description");
+	}
+
+
+	// For Filtering by Price
+	void OnPriceChanged(ChangeEventArgs args)
+	{
+		string values = args.Value.ToString();
+		studentFilteringList(values, "Price");
+	}
+
+	// For Filtering by ValidityInCheckIn
+	void OnValidityInDaysChanged(ChangeEventArgs args)
+	{
+		string values = args.Value.ToString();
+		studentFilteringList(values, "ValidityInDays");
+	}
+
+
+	// For Filtering by ValidityInCheckIn
+	void OnValidityInCheckInChanged(ChangeEventArgs args)
+	{
+		string values = args.Value.ToString();
+		studentFilteringList(values, "ValidityInCheckIn");
+	}
+
+
+	// For Filtering by Adress
+	void OnGymIdChanged(ChangeEventArgs args)
+	{
+		string values = args.Value.ToString();
+		studentFilteringList(values, "GymId");
+	}
+
+	//Filtering
+	protected async Task studentFilteringList(String Value, string columnName)
+	{
+
+		if (Value.Trim().Length > 0)
+		{
+			switch (columnName)
+			{
+				case "Description":
+					TypeOfMemberships = TypeOfMemberships.Where(x => x.Description.Contains(Value)).ToList();
+					break;
+				case "Price":
+					TypeOfMemberships = TypeOfMemberships.Where(x => x.Price.Equals(Convert.ToDouble(Value))).ToList();
+					break;
+				case "ValidityInDays":
+					TypeOfMemberships = TypeOfMemberships.Where(x => x.ValidityInDays.Equals(Int32.Parse(Value))).ToList();
+					break;
+				case "ValidityInCheckIn":
+					TypeOfMemberships = TypeOfMemberships.Where(x => x.ValidityInCheckIn.Equals(Int32.Parse(Value))).ToList();
+					break;
+				case "GymId":
+					TypeOfMemberships = TypeOfMemberships.Where(x => getGymName(x.GymId).Contains(Value)).ToList();
+					break;
+				default:
+					TypeOfMemberships = typeOfMembershipService.GetTypeOfMemberships();
+					break;
+			}
+		}
+		else
+		{
+			TypeOfMemberships = typeOfMembershipService.GetTypeOfMemberships();
+		}
+	}
+
+	private string getGymName(string gymId)
+	{
+		Console.Write(gymId);
+		//gymId = gymId.Remove(1,2);
+		Gym gym = gymService.GetGym(gymId);
+		Console.Write(gym);
+		return gym.Name;
+	}
+	private void Select(TypeOfMembership membership)
+	{
+		typeOfMembership = membership;
+		purchased = false;
+	}
+	private void ValueChanged(ChangeEventArgs e)
+	{
+		selectDateOfFirstUse = DateTime.Parse(e.Value.ToString());
+		selectDateOfFirstUse = selectDateOfFirstUse.AddHours(3);
+		selectDateOfFirstUse = selectDateOfFirstUse.AddHours(DateTime.Now.Hour);
+		selectDateOfFirstUse = selectDateOfFirstUse.AddMinutes(DateTime.Now.Minute);
+		selectDateOfFirstUse = selectDateOfFirstUse.AddSeconds(DateTime.Now.Second);
+	}
+	private async Task Buy(string typeOfMembershipId)
+	{
+		TypeOfMembership selectedMembership = await typeOfMembershipService.GetTypeOfMembershipAsync(typeOfMembershipId);
+		if (selectedMembership != null)
+		{
+			Client client = await clientService.GetClientAsync(clientId);
+			if (client != null)
+			{
+				ClientsMemberships clientsMemberships = new ClientsMemberships();
+				clientsMemberships.ClientId = client.Id;
+				clientsMemberships.MembershipId = selectedMembership.Id;
+				clientsMemberships.DateOfPurchasing = DateTime.Now;
+				clientsMemberships.Barcode = client.Barcode;
+				clientsMemberships.Price = selectedMembership.Price;
+				clientsMemberships.Validity = true;
+				clientsMemberships.GymId = selectedMembership.GymId;
+				if(selectDateOfFirstUse.Year == DateTime.Now.Year && 
+					selectDateOfFirstUse.Month == DateTime.Now.Month &&
+					selectDateOfFirstUse.Day == DateTime.Now.Day)
+				{
+					clientsMemberships.CheckInsSoFa = 1;
+					CheckIns checkIns = CreateCheckIns(clientsMemberships);
+					if (checkIns != null)
+					{
+						await checkInService.SaveAsync(checkIns);
+					}
+				}
+				else
+				{
+					clientsMemberships.CheckInsSoFa = 0;
+				}
+				clientsMemberships.DateOfFirstUse = selectDateOfFirstUse;
+				await clientsMembershipsService.SaveAsync(clientsMemberships);
+				purchased = true;
+			}
+		}
+		ClientsMembershipsList = await clientsMembershipsService.GetClientsMembershipsAsync();
+
+	}
+
+	private CheckIns CreateCheckIns(ClientsMemberships clientsMemberships)
+	{
+		CheckIns checkIns = new CheckIns();
+		checkIns.ClientId = clientsMemberships.ClientId;
+		checkIns.MembershipId = clientsMemberships.MembershipId;
+		checkIns.Barcode = clientsMemberships.Barcode;
+		checkIns.GymId = clientsMemberships.GymId;
+		return checkIns;
+	}
+
+	private async Task Delete(string clientMembershipId)
+	{
+		clientsMembershipsService.Delete(clientMembershipId);
+		ClientsMembershipsList = await clientsMembershipsService.GetClientsMembershipsAsync();
+	}
+
+}

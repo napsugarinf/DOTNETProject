@@ -7,7 +7,8 @@ namespace Fitness.Data
     public class ClientsMemberships
     {
         [BsonId]
-        public string ClientsMembershipsId { get; set; }
+		[BsonRepresentation(BsonType.ObjectId)]
+		public string ClientsMembershipsId { get; set; }
         public string ClientId { get; set; }
 
         public string MembershipId { get; set; }
@@ -18,7 +19,7 @@ namespace Fitness.Data
 
         public int CheckInsSoFa { get; set; }
 
-        public float Price { get; set; }
+        public double Price { get; set; }
 
         public bool Validity { get; set; }
 

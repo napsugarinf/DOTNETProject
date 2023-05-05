@@ -63,12 +63,13 @@
 
 
 @code {
-   
+
     Gym Gym = new Gym();
     List<Gym> GymList = new List<Gym>();
 
     protected override async Task OnInitializedAsync()
     {
+        Gym = new Gym();
         GetGyms();
 
     }
