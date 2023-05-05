@@ -1,10 +1,6 @@
 {
   "Version": 1,
-<<<<<<< HEAD
-  "Hash": "wRPfh0UYgG8VwHQf4IiYh1YeutszOIHNeS+t5sbiSLg=",
-=======
-  "Hash": "J6NsVRPQY0gBgXuWhpsFqNt43DmmHNwiexNVC56DGtQ=",
->>>>>>> ff14fe453c3b27b7b346abb62de86e3e63b58861
+  "Hash": "4OiaPE5UcqKGIBL1qmd8EK66t2ALCkwc30oyFh96S6Y=",
   "Source": "Fitness",
   "BasePath": "_content/Fitness",
   "Mode": "Default",
@@ -276,10 +272,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\webcamjs\\Configuration.js",
+      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\webcamjs\\Configuration.js",
       "SourceId": "Fitness",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "webcamjs/Configuration.js",
       "AssetKind": "All",
@@ -293,10 +289,10 @@
       "OriginalItemSpec": "wwwroot\\webcamjs\\Configuration.js"
     },
     {
-      "Identity": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\webcamjs\\webcam.min.js",
+      "Identity": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\webcamjs\\webcam.min.js",
       "SourceId": "Fitness",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\porti\\OneDrive\\Documents\\VI.felev\\DotNetProject\\DOTNETProject\\Fitness\\wwwroot\\",
+      "ContentRoot": "C:\\NAPSUGAR\\Sapientia3ev\\2felev\\DOTNET\\PROJEKT\\Fitness\\DOTNETProject\\Fitness\\wwwroot\\",
       "BasePath": "_content/Fitness",
       "RelativePath": "webcamjs/webcam.min.js",
       "AssetKind": "All",
