@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/home/{userId}"
 
 @using Fitness.Data
 @inject Fitness.IService.IClientService clientService
@@ -112,6 +112,10 @@
 @code{
     Client Client = new Client();
     List<Client> Clients = new List<Client>();
+
+    [Parameter]
+    public string? userId { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         GetClients();  

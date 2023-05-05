@@ -20,8 +20,8 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/AddMembership.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkTWVtYmVyc2hpcC5yYXpvcg==
+[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/BuyMembership.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQnV5TWVtYmVyc2hpcC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/ClientDetails.razor]
@@ -42,6 +42,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/NewMembership.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmV3TWVtYmVyc2hpcC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/Welcome.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VsY29tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Shared/SurveyPrompt.razor]

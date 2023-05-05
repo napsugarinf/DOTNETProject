@@ -10,7 +10,7 @@ namespace Fitness.Data
         public string Id { get; set; } = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
 
         public string Name { get; set; } = string.Empty;
-        public string TypeOfUser { get; set; } = string.Empty;
+        public string Role { get; set; } = string.Empty;
         public bool Password { get; set; } = false;
     }
 }

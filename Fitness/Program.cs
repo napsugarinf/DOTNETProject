@@ -13,6 +13,7 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<ITypeOfMembership, TypeOfMembershipService>();
 builder.Services.AddScoped<IGymService, GymService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IClientsMembershipsService, ClientsMembershipsService>();
 builder.Services.AddScoped<ICheckInService, CheckInService>();
 
