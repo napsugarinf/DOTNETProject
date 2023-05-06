@@ -70,17 +70,15 @@
         <div class="row" style="margin-top:5px">
             <div class="col-md-4">
                 <button type="button" class="btn btn-primary" @onclick="Capture">
-                    <span class="oi oi-camera-slr" aria-hidden="true"></span>Create photo
+                    Create photo 
+                    <span class="oi oi-camera-slr" aria-hidden="true"></span>
                 </button>
+                <div class="col-md-8" style="width:250px; height:200px; ">
+                    <p>Camera</p>
+                        <div style="width:200px; height:20px; background-color:dodgerblue" id="camera"></div>
+                </div>
             </div>
-            <div class="col-md-4" style="width:300px; height:300px; background-color:red">
-                <p>Camera</p>
-                <div style="width:200px; height:200px; background-color:green" id ="camera"></div>
-            </div>
-            <div class="col-md-4" style="width:300px; height:300px; background-color:blue">
-                <div id ="results">Your image</div>
-                    <img src="@imageUrl" alt="Alternate Text" style="width:300px; height:300px;" />
-            </div>
+            
         </div>
         <div class="row" style="margin-top:5px">
             <div class="col-md-4">
@@ -97,17 +95,29 @@
                     <button type="button" class="btn btn-primary" @onclick="@(e=>Reset())" style="float:right; margin-right:10px; background-color:red">Reset</button>
             </div>
         </div>
+            @if (clientIsSave)
+            {
+                <div class="row" style="color:deepskyblue; margin-top:5px; margin-left:130px">
+                    The save is successful!
+                </div>
+            }
     </EditForm>
     </div>
-    <div class="alert alert-primary @HideAlert" role="alert">
-        @AlertContent
-    </div>
+    
+    
     <div class="col-md-6">
-        <button @onclick="() => ButtonHandler()">
+        <button class="btn btn-primary" @onclick="() => ButtonHandler()">
             <span class="oi oi-plus" aria-hidden="true"></span> Buy Membership
         </button>
     </div>
-     <div class="col-md-8">
+    @if (imageUrl.Length > 0)
+    {
+        <div class="col-md-6" style="width:300px; height:300px; margin:110px">
+            <div id="results">Your image</div>
+            <img src="@imageUrl" alt="Alternate Text" style="width:240px; height:200px;" />
+        </div>
+    }
+    @* <div class="col-md-8">
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -116,7 +126,7 @@
                     <th>Phone Number  </th>
                     <th>Email   </th>
                     <th>Inserted By Date</th>
-                    <th>Is Deleted</th>
+                    <th>Photo</th>
                 </tr>
             </thead>
             <tbody>
@@ -130,7 +140,7 @@
                             <td>@cli.PhoneNr</td>
                             <td>@cli.Email</td>
                             <td>@cli.InsertedByDate</td>
-                            <td>@cli.IsDeleted</td>
+                            <td><img src="@cli.Photo" alt="Alternate Text" style="width:40px; height:30px;" /></td>
                             <td>
                                 <button class="btn btn-primary" @onclick="@(e=>Delete(cli.Id))">Delete</button>
                             </td>
@@ -140,7 +150,7 @@
                 }
             </tbody>
         </table>
-    </div>
+    </div>*@
 </div>
 
 
@@ -164,9 +174,12 @@
         var isValid = editContext.Validate();
         if (isValid )
         {
+            if (imageUrl.Length > 0)
+            {
+                Client.Photo = imageUrl;
+            }
             await clientService.SaveAsync(Client);
             clientIsSave = true;
-            DoSomthing();
             Reset();
         }
         else
@@ -194,21 +207,6 @@
         GetClients();
     }
 
-    private string HideAlert { get; set; } = "d-none";
-    private string AlertContent { get; set; } = "This is a primary alert—check it out!";
-    private void DoSomthing()
-    {
-        if (HideAlert == "")
-        {
-            HideAlert = "d-none";
-            AlertContent = "This is a primary alert—check it out!";
-        }
-        else
-        {
-            HideAlert = "";
-            AlertContent = "The save is successful";
-        }
-    }
     private void ButtonHandler()
     {
         clientIsSave = true;
@@ -228,9 +226,10 @@
 
     protected override void OnAfterRender(bool firstRender){
         
-        if(firstRender){
+        /*if(firstRender){
             JSRuntime.InvokeVoidAsync("ready",this);
-        }
+        }*/
+        JSRuntime.InvokeVoidAsync("ready",this);
 
     }
 }
