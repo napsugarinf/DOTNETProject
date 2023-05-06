@@ -9,69 +9,69 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Fitness
 build_property.RootNamespace = Fitness
-build_property.ProjectDir = C:\NAPSUGAR\Sapientia3ev\2felev\DOTNET\PROJEKT\Fitness\DOTNETProject\Fitness\
+build_property.ProjectDir = C:\Users\porti\OneDrive\Documents\GitHub\DOTNETProject\Fitness\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\NAPSUGAR\Sapientia3ev\2felev\DOTNET\PROJEKT\Fitness\DOTNETProject\Fitness
+build_property.MSBuildProjectDirectory = C:\Users\porti\OneDrive\Documents\GitHub\DOTNETProject\Fitness
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/App.razor]
+[C:/Users/porti/OneDrive/Documents/GitHub/DOTNETProject/Fitness/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/BuyMembership.razor]
+[C:/Users/porti/OneDrive/Documents/GitHub/DOTNETProject/Fitness/Pages/BuyMembership.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQnV5TWVtYmVyc2hpcC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/ClientDetails.razor]
+[C:/Users/porti/OneDrive/Documents/GitHub/DOTNETProject/Fitness/Pages/ClientDetails.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xpZW50RGV0YWlscy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/Gyms.razor]
+[C:/Users/porti/OneDrive/Documents/GitHub/DOTNETProject/Fitness/Pages/Gyms.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR3ltcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/Home.razor]
+[C:/Users/porti/OneDrive/Documents/GitHub/DOTNETProject/Fitness/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/NewClient.razor]
+[C:/Users/porti/OneDrive/Documents/GitHub/DOTNETProject/Fitness/Pages/NewClient.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmV3Q2xpZW50LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/NewMembership.razor]
+[C:/Users/porti/OneDrive/Documents/GitHub/DOTNETProject/Fitness/Pages/NewMembership.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmV3TWVtYmVyc2hpcC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/Welcome.razor]
+[C:/Users/porti/OneDrive/Documents/GitHub/DOTNETProject/Fitness/Pages/Welcome.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VsY29tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Shared/SurveyPrompt.razor]
+[C:/Users/porti/OneDrive/Documents/GitHub/DOTNETProject/Fitness/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/_Imports.razor]
+[C:/Users/porti/OneDrive/Documents/GitHub/DOTNETProject/Fitness/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Shared/MainLayout.razor]
+[C:/Users/porti/OneDrive/Documents/GitHub/DOTNETProject/Fitness/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-aq9025sork
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Shared/NavMenu.razor]
+[C:/Users/porti/OneDrive/Documents/GitHub/DOTNETProject/Fitness/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-x2mhhwmrjn
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/Error.cshtml]
+[C:/Users/porti/OneDrive/Documents/GitHub/DOTNETProject/Fitness/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/_Host.cshtml]
+[C:/Users/porti/OneDrive/Documents/GitHub/DOTNETProject/Fitness/Pages/_Host.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/NAPSUGAR/Sapientia3ev/2felev/DOTNET/PROJEKT/Fitness/DOTNETProject/Fitness/Pages/_Layout.cshtml]
+[C:/Users/porti/OneDrive/Documents/GitHub/DOTNETProject/Fitness/Pages/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
