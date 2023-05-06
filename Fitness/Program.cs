@@ -1,6 +1,7 @@
 using Fitness.Data;
 using Fitness.IService;
 using Fitness.Service;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -16,6 +17,32 @@ builder.Services.AddScoped<IGymService, GymService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IClientsMembershipsService, ClientsMembershipsService>();
 builder.Services.AddScoped<ICheckInService, CheckInService>();
+/*
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+})
+.AddCookie()
+.AddOpenIdConnect(options =>
+{
+    options.Authority = "https://localhost:7047";
+    options.ClientId = "your-client-id";
+    options.ClientSecret = "your-client-secret";
+    options.ResponseType = "code";
+    options.SaveTokens = true;
+});
+
+builder.Services.AddAuthorization();
+*/
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login";
+        options.LogoutPath = "/Logout";
+    });
+
 
 var app = builder.Build();
 
