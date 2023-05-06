@@ -129,7 +129,7 @@
 			</p>
 		}
 	}
-	<div class="col-md-8">
+	@*<div class="col-md-8">
 		<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
@@ -170,7 +170,7 @@
 				}
 			</tbody>
 		</table>
-	</div>
+	</div>*@
 </div>
 
 @code {
@@ -198,7 +198,7 @@
 	void OnDescriptionChanged(ChangeEventArgs args)
 	{
 		string values = args.Value.ToString();
-		studentFilteringList(values, "Description");
+		membershipTypeFilteringList(values, "Description");
 	}
 
 
@@ -206,14 +206,14 @@
 	void OnPriceChanged(ChangeEventArgs args)
 	{
 		string values = args.Value.ToString();
-		studentFilteringList(values, "Price");
+		membershipTypeFilteringList(values, "Price");
 	}
 
 	// For Filtering by ValidityInCheckIn
 	void OnValidityInDaysChanged(ChangeEventArgs args)
 	{
 		string values = args.Value.ToString();
-		studentFilteringList(values, "ValidityInDays");
+		membershipTypeFilteringList(values, "ValidityInDays");
 	}
 
 
@@ -221,7 +221,7 @@
 	void OnValidityInCheckInChanged(ChangeEventArgs args)
 	{
 		string values = args.Value.ToString();
-		studentFilteringList(values, "ValidityInCheckIn");
+		membershipTypeFilteringList(values, "ValidityInCheckIn");
 	}
 
 
@@ -229,11 +229,11 @@
 	void OnGymIdChanged(ChangeEventArgs args)
 	{
 		string values = args.Value.ToString();
-		studentFilteringList(values, "GymId");
+		membershipTypeFilteringList(values, "GymId");
 	}
 
 	//Filtering
-	protected async Task studentFilteringList(String Value, string columnName)
+	protected async Task membershipTypeFilteringList(String Value, string columnName)
 	{
 
 		if (Value.Trim().Length > 0)

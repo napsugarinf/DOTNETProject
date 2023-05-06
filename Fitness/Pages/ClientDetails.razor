@@ -4,155 +4,217 @@
 
 @using Fitness.Data
 @using System.Text.RegularExpressions;
+@inject NavigationManager navigationManager
+@inject Fitness.IService.ITypeOfMembership typeOfMembershipService
+@inject Fitness.IService.IGymService gymService
 @inject Fitness.IService.IClientService clientService
+@inject Fitness.IService.IClientsMembershipsService clientsMembershipsService
+@inject Fitness.IService.ICheckInService checkInService
 
-
-<div class="row">
-    <div class="col-md-4">
-        <EditForm Model="@Client" OnValidSubmit="@HandleValidSubmit">
-            <DataAnnotationsValidator />
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4">
-                    <label> Id card: </label>
-                </div>
-                <div class="col-md-8">
-                    <input @bind="Client.IdCard" style="width:100%;" placeholder="Client id card" />
-                    <ValidationMessage For="@(() => Client.IdCard)" />
-                </div>
-            </div>
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4">
-                    <label> Name: </label>
-                </div>
-                <div class="col-md-8">
-                    <input @bind="Client.Name" style="width:100%;" placeholder="Client name" />
-                    <ValidationMessage For="@(() => Client.Name)" />
-                </div>
-            </div>
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4">
-                    <label> Phone Number: </label>
-                </div>
-                <div class="col-md-8">
-                    <input @bind="Client.PhoneNr" style="width:100%;" placeholder="ex. +40*********" />
-                    <ValidationMessage For="@(() => Client.PhoneNr)" />
-                </div>
-            </div>
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4">
-                    <label> Email: </label>
-                </div>
-                <div class="col-md-8">
-                    <input @bind="Client.Email" style="width:100%;" placeholder=" ex. name@gmail.com" />
-                    <ValidationMessage For="@(() => Client.Email)" />
-                </div>
-            </div>
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4">
-                    <label> Address: </label>
-                </div>
-                <div class="col-md-8">
-                    <input @bind="Client.Address" style="width:100%;" placeholder="nr. str. city" />
-                    <ValidationMessage For="@(() => Client.Address)" />
-                </div>
-            </div>
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4">
-                    <label> Barcode: </label>
-                </div>
-                <div class="col-md-8">
-                    <button type="button" class="btn btn-primary" @onclick="@(e=>GenerateBarcode())">Generate barcode</button>
-                    <label>@Client.Barcode</label>
-                    <ValidationMessage For="@(() => Client.Barcode)" />
-                </div>
-            </div>
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4">
-                    <label> Additional Information: </label>
-                </div>
-                <div class="col-md-8">
-                    <textarea @bind="Client.AdditionanInformation" style="width:100%;" placeholder="Additional information" />
-                </div>
-            </div>
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4"> </div>
-                <div class="col-md-8">
-                    <button class="btn btn-primary" type="submit">Submit</button>
-                    <button type="button" class="btn btn-primary" @onclick="@(e=>Reset())" style="float:right; margin-right:10px; background-color:red">Reset</button>
-                </div>
-            </div>
-
-
-        </EditForm>
-
+@if(Client == null || Client.IsDeleted == true)
+{
+    <p>This client does not exist</p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <img src="@Client.Photo" alt="Alternate Text" style="width:220px; height:180px; margin:30px" />
+        </div>
+        <div class="col-md-4" style="margin-top:30px">
+            <p style="font-size:larger; color:deepskyblue">@Client.Name</p>
+            <a>Edit Informations</a>
+            <ul>
+                <li><b>Id card:</b> @Client.IdCard</li>
+                <li><b>Email address:</b>  @Client.Email</li>
+                <li><b>Phone number:</b> @Client.PhoneNr</li>
+                <li><b>Address:</b> - @Client.Address</li>
+                <li><b>Barcode: @Client.Barcode</b></li>
+                @*@if (@Client.AdditionanInformation.Length > 1)
+                {
+                    <li>@Client.AdditionanInformation</li>
+                }*@
+            </ul>
+        </div>
     </div>
-    <div class="alert alert-primary @HideAlert" role="alert">
-        @AlertContent
-    </div>
+    <h3>Memberships</h3>
+	<div class="row">
+		<input onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+	</div>
+	<div class="row">
+	<table class="table table-striped">
+			<tr style="background-color:#336699 ;">
+			<td align="center"></td>
+			<td align="center">
+				Description
+			</td>
+			<td align="center">
+				Price
+			</td>
+			<td align="center">
+				Validity In Days
+			</td>
+			<td align="center">
+				Validity In Check In
+			</td>
+			<td align="center">
+				Gym 
+			</td>
+			<td align="center">
+				From Time
+			</td>
+			<td align="center">
+				To Time
+			</td>
+			<td align="center">
+				Nr Of Possible Usages Daily
+			</td>
+		</tr>
+		<tr style="height: 30px; background-color:#336699 ; color:#FFFFFF ;">
+			<td align="center">
+				<span class="oi oi-magnifying-glass" aria-hidden="true"></span>
+			</td>
+			<td align="center">
+				<input onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			</td>
+			<td align="center">
+					<input onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			</td>
+			<td align="center">
+					<input onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			</td>
+			<td align="center">
+					<input onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			</td>
+			<td align="center">
+					<input onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			</td>
+		</tr>
+		<tbody>
+			@foreach (var Membership in TypeOfMemberships)
+			{
+				<tr>
+					<td align="center"></td>
+					<td align="center">
+						<span>
+							@Membership.Description
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.Price
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.ValidityInDays
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.ValidityInCheckIn
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@getGymName(Membership.GymId)
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.FromTime.ToString(@"hh\:mm")
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.ToTime.ToString(@"hh\:mm")
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.NrOfPossibleUsagesDaily
+						</span>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	</div>
 
-</div>
+    <div class="row">
+        <button class="btn btn-primary" @onclick="() => ButtonHandler()">
+            <span class="oi oi-plus" aria-hidden="true"></span> Buy Membership
+        </button>
+    </div>
+}
+
+
 
 @code {
-    Client Client = new Client();
+    //Sara id "64568d675b43a00177c57031"
+    //Emily id "64523d069a001465a6b9f99f"
+    private string clientId = "64568d675b43a00177c57031";
+
+    Client Client;
     List<Client> Clients = new List<Client>();
+	public List<TypeOfMembership> TypeOfMemberships = new List<TypeOfMembership>();
 
     [Parameter]
     public string? ClientId { get; set; }
 
-    protected override void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
-        GetClients();
+        Client = await clientService.GetClientAsync(clientId);
     }
-    private void GetClients()
+    
+
+    private void ButtonHandler()
     {
-        Clients = clientService.GetClients();
-    }
-    private async Task HandleValidSubmit()
-    {
-        EditContext editContext = new EditContext(Client);
-        var isValid = editContext.Validate();
-        if (isValid)
-        {
-            Client.InsertedByDate = DateTime.Now;
-            clientService.SaveOrUpdate(Client);
-            DoSomething();
-            Reset();
-        }
-        GetClients();
-    }
-    private void Reset()
-    {
-        Client = new Client();
+        navigationManager
+             .NavigateTo($"/buymembership/{Client.Id}");
 
     }
-    private void GenerateBarcode()
-    {
-        Guid guid = Guid.NewGuid();
-        string uniqueId = Convert.ToBase64String(guid.ToByteArray());
-        Client.Barcode = uniqueId.Replace("/", "").Replace("+", "").Substring(0, 13);
-        //uniqueId = uniqueId.Replace("/", "").Replace("+", "").Substring(0, 10);
-        //return uniqueId;
-    }
-    private void Delete(string clientId)
-    {
-        clientService.Delete(clientId);
-        GetClients();
-    }
 
-    private string HideAlert { get; set; } = "d-none";
-    private string AlertContent { get; set; } = "This is a primary alert—check it out!";
-    private void DoSomething()
-    {
-        if (HideAlert == "")
-        {
-            HideAlert = "d-none";
-            AlertContent = "This is a primary alert—check it out!";
-        }
-        else
-        {
-            HideAlert = "";
-            AlertContent = "The save is successful";
-        }
-    }
+	void OnDescriptionChanged(ChangeEventArgs args)
+	{
+		string values = args.Value.ToString();
+		membershipFilteringList(values, "Description");
+	}
+
+	//Filtering
+	protected async Task membershipFilteringList(String Value, string columnName)
+	{
+		/*
+		if (Value.Trim().Length > 0)
+		{
+			switch (columnName)
+			{
+				case "Description":
+					TypeOfMemberships = TypeOfMemberships.Where(x => x.Description.Contains(Value)).ToList();
+					break;
+				case "ValidityInDays":
+					TypeOfMemberships = TypeOfMemberships.Where(x => x.ValidityInDays.Equals(Int32.Parse(Value))).ToList();
+					break;
+				case "ValidityInCheckIn":
+					TypeOfMemberships = TypeOfMemberships.Where(x => x.ValidityInCheckIn.Equals(Int32.Parse(Value))).ToList();
+					break;
+				case "GymId":
+					TypeOfMemberships = TypeOfMemberships.Where(x => getGymName(x.GymId).Contains(Value)).ToList();
+					break;
+				default:
+					TypeOfMemberships = typeOfMembershipService.GetTypeOfMemberships();
+					break;
+			}
+		}
+		else
+		{
+			TypeOfMemberships = typeOfMembershipService.GetTypeOfMemberships();
+		}*/
+	}
+	private string getGymName(string gymId)
+	{
+		Gym gym = gymService.GetGym(gymId);
+		return gym.Name;
+	}
 
 }
