@@ -6,6 +6,8 @@ namespace Fitness.IService
     {
         void SaveOrUpdate(Client client);
 
+        Task UpdateAsync(Client client);
+
         Task SaveAsync(Client client);
         Client GetClient(string clientId);
         Task<Client> GetClientAsync(string clientId);
