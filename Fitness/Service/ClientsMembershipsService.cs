@@ -36,5 +36,11 @@ namespace Fitness.Service
 			_clientsMembershipsTable.DeleteOne(x => x.ClientsMembershipsId == clientMembershipId);
 			return "Deleted";
 		}
+
+		public async Task<List<ClientsMemberships>> GetClientMembershipsAsync(string clientId)
+		{
+			var result = await _clientsMembershipsTable.FindAsync(x => x.ClientId == clientId);
+			return result.ToList();
+		}
 	}
 }

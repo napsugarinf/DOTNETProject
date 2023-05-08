@@ -1,0 +1,183 @@
+﻿@page "/editclientinfo"
+@*@page "/editclientinfo/{ClientId:String}"*@
+
+<PageTitle>New Client</PageTitle>
+
+@using Fitness.Data
+@using System.Text.RegularExpressions;
+@inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
+@inject Fitness.IService.IClientService clientService
+
+<h3>Edit Client Information</h3>
+@if( Client == null)
+{
+    <p>The client's data could not be loaded</p>
+}
+else{
+<div class="row">
+    <div class="col-md-4">
+        <EditForm Model="@Client" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <div class="row" style="margin-top:5px">
+            <div class="col-md-4">
+                <label> Id card: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="Client.IdCard" style="width:100%;" placeholder="Client id card" />
+                <ValidationMessage For="@(() => Client.IdCard)" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:5px">
+            <div class="col-md-4">
+                <label> Name: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="Client.Name" style="width:100%;" placeholder="Client name" />
+                <ValidationMessage For="@(() => Client.Name)" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:5px">
+            <div class="col-md-4">
+                <label> Phone Number: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="Client.PhoneNr" style="width:100%;" placeholder="ex. +40*********" />
+                <ValidationMessage For="@(() => Client.PhoneNr)" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:5px">
+            <div class="col-md-4">
+                <label> Email: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="Client.Email" style="width:100%;" placeholder=" ex. name@gmail.com" />
+                <ValidationMessage For="@(() => Client.Email)" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:5px">
+            <div class="col-md-4">
+                <label> Address: </label>
+            </div>
+            <div class="col-md-8">
+                <input @bind="Client.Address" style="width:100%;" placeholder="nr. str. city" />
+                <ValidationMessage For="@(() => Client.Address)" />
+            </div>
+        </div>
+        @*<div class="row" style="margin-top:5px">
+            <div class="col-md-4">
+                <label> Barcode: </label>
+            </div>
+            <div class="col-md-8">
+                    <button type="button" class="btn btn-primary" @onclick="@(e=>GenerateBarcode())">Generate barcode</button>
+                <label>@Client.Barcode</label>
+                <ValidationMessage For="@(() => Client.Barcode)" />
+            </div>
+        </div>*@
+        <div class="row" style="margin-top:5px">
+            <div class="col-md-4">
+                <button type="button" class="btn btn-primary" @onclick="Capture">
+                    Create photo 
+                    <span class="oi oi-camera-slr" aria-hidden="true"></span>
+                </button>
+                <div class="col-md-8" style="width:250px; height:200px; ">
+                    <p>Camera</p>
+                        <div style="width:200px; height:20px; background-color:dodgerblue" id="camera"></div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="row" style="margin-top:5px">
+            <div class="col-md-4">
+                <label> Additional Information: </label>
+            </div>
+            <div class="col-md-8">
+                <textarea @bind="Client.AdditionanInformation" style="width:100%;" placeholder="Additional information" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:5px">
+            <div class="col-md-4"> </div>
+            <div class="col-md-8">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <button type="button" class="btn btn-primary" @onclick="@(e=>Reset())" style="float:right; margin-right:10px; background-color:red">Reset</button>
+            </div>
+        </div>
+            @if (clientIsSave)
+            {
+                <div class="row" style="color:deepskyblue; margin-top:5px; margin-left:130px">
+                    The save is successful!
+                </div>
+            }
+    </EditForm>
+    </div>
+    @if (imageUrl.Length > 0)
+    {
+        <div class="col-md-6" style="width:300px; height:300px; margin:150px;">
+            <div id="results">Your image</div>
+            <img src="@imageUrl" alt="Alternate Text" style="width:240px; height:200px;" />
+        </div>
+    }
+</div>
+}
+
+@code {
+    Client Client ;
+    private string clientId = "64568d675b43a00177c57031";
+    bool clientIsSave = false;
+    string imageUrl;
+
+    [Parameter]
+    public string? ClientId { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        Client = await clientService.GetClientAsync(clientId);
+        imageUrl = Client.Photo;
+    }
+    private async Task HandleValidSubmit()
+    {
+        EditContext editContext = new EditContext(Client);
+        var isValid = editContext.Validate();
+        if (isValid)
+        {
+            if (imageUrl.Length > 0)
+            {
+                Client.Photo = imageUrl;
+            }
+            await clientService.UpdateAsync(Client);
+            clientIsSave = true;
+            Reset();
+        }
+        else
+        {
+            clientIsSave = false;
+        }
+    }
+    private void Reset()
+    {
+        Client = new Client();
+
+    }
+    private void GenerateBarcode()
+    {
+        Guid guid = Guid.NewGuid();
+        string uniqueId = Convert.ToBase64String(guid.ToByteArray());
+        Client.Barcode = uniqueId.Replace("/", "").Replace("+", "").Substring(0, 13);
+    }
+
+    public async void Capture()
+    {
+        imageUrl = await JSRuntime.InvokeAsync<string>("take_snapshot");
+        StateHasChanged();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+
+        if(firstRender){
+            JSRuntime.InvokeVoidAsync("ready",this);
+        }
+
+    }
+
+}

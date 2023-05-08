@@ -13,7 +13,7 @@
 
 @if(Client == null || Client.IsDeleted == true)
 {
-    <p>This client does not exist</p>
+	<p>The client's data could not be loaded</p>
 }
 else
 {
@@ -22,28 +22,36 @@ else
             <img src="@Client.Photo" alt="Alternate Text" style="width:220px; height:180px; margin:30px" />
         </div>
         <div class="col-md-4" style="margin-top:30px">
-            <p style="font-size:larger; color:deepskyblue">@Client.Name</p>
-            <a>Edit Informations</a>
+            <h3 style=" color:deepskyblue">@Client.Name</h3>
+			<a @onclick="() =>NavigateEditPageButtonHandler()">Edit Informations</a>
             <ul>
                 <li><b>Id card:</b> @Client.IdCard</li>
                 <li><b>Email address:</b>  @Client.Email</li>
                 <li><b>Phone number:</b> @Client.PhoneNr</li>
                 <li><b>Address:</b> - @Client.Address</li>
                 <li><b>Barcode: @Client.Barcode</b></li>
-                @*@if (@Client.AdditionanInformation.Length > 1)
+                @*@if (@Client.AdditionalInformation.Length > 1)
                 {
-                    <li>@Client.AdditionanInformation</li>
+                    <li>@Client.AdditionalInformation</li>
                 }*@
             </ul>
         </div>
     </div>
-    <h3>Memberships</h3>
+    <h4>Memberships</h4>
 	<div class="row">
-		<input onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+		<div class="col-md-4" style="margin-bottom:7px; margin-left:30px;">
+			<h6>
+				<span class="oi oi-magnifying-glass" aria-hidden="true"></span>
+				Search membership
+			</h6>
+		</div>
+		<div class="col-md-4" style="margin-left:-90px; margin-top:12px;">
+			<input style="margin-left:-40px" onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+		</div>
 	</div>
 	<div class="row">
 	<table class="table table-striped">
-			<tr style="background-color:#336699 ;">
+		<tr style="background-color:#336699; height:50px">
 			<td align="center"></td>
 			<td align="center">
 				Description
@@ -52,52 +60,25 @@ else
 				Price
 			</td>
 			<td align="center">
-				Validity In Days
+				Date of purchasing
 			</td>
 			<td align="center">
-				Validity In Check In
+				Check ins
 			</td>
 			<td align="center">
 				Gym 
 			</td>
 			<td align="center">
-				From Time
-			</td>
-			<td align="center">
-				To Time
-			</td>
-			<td align="center">
-				Nr Of Possible Usages Daily
-			</td>
-		</tr>
-		<tr style="height: 30px; background-color:#336699 ; color:#FFFFFF ;">
-			<td align="center">
-				<span class="oi oi-magnifying-glass" aria-hidden="true"></span>
-			</td>
-			<td align="center">
-				<input onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
-			</td>
-			<td align="center">
-					<input onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
-			</td>
-			<td align="center">
-					<input onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
-			</td>
-			<td align="center">
-					<input onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
-			</td>
-			<td align="center">
-					<input onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
 			</td>
 		</tr>
 		<tbody>
-			@foreach (var Membership in TypeOfMemberships)
+				@foreach (var Membership in ClientMemberships)
 			{
 				<tr>
 					<td align="center"></td>
 					<td align="center">
 						<span>
-							@Membership.Description
+							@GetMembershipDescription(Membership.MembershipId)
 						</span>
 					</td>
 					<td align="center">
@@ -107,33 +88,24 @@ else
 					</td>
 					<td align="center">
 						<span>
-							@Membership.ValidityInDays
+							@Membership.DateOfPurchasing
 						</span>
 					</td>
 					<td align="center">
 						<span>
-							@Membership.ValidityInCheckIn
+							x / @Membership.CheckInsSoFa
 						</span>
 					</td>
 					<td align="center">
 						<span>
-							@getGymName(Membership.GymId)
+							@GetGymName(Membership.GymId)
 						</span>
 					</td>
 					<td align="center">
-						<span>
-							@Membership.FromTime.ToString(@"hh\:mm")
-						</span>
-					</td>
-					<td align="center">
-						<span>
-							@Membership.ToTime.ToString(@"hh\:mm")
-						</span>
-					</td>
-					<td align="center">
-						<span>
-							@Membership.NrOfPossibleUsagesDaily
-						</span>
+						@if (Membership.Validity)
+						{
+							<button class="btn btn-primary" @onclick="() => CheckInButtonHandler()">Check in</button>
+						}
 					</td>
 				</tr>
 			}
@@ -151,29 +123,34 @@ else
 
 
 @code {
-    //Sara id "64568d675b43a00177c57031"
-    //Emily id "64523d069a001465a6b9f99f"
-    private string clientId = "64568d675b43a00177c57031";
+	//Sara id "64568d675b43a00177c57031"
+	//Emily id "64523d069a001465a6b9f99f"
+	private string clientId = "64568d675b43a00177c57031";
 
-    Client Client;
-    List<Client> Clients = new List<Client>();
-	public List<TypeOfMembership> TypeOfMemberships = new List<TypeOfMembership>();
+	Client Client;
+	List<Client> Clients = new List<Client>();
+	public List<ClientsMemberships> ClientMemberships = new List<ClientsMemberships>();
 
-    [Parameter]
-    public string? ClientId { get; set; }
+	[Parameter]
+	public string? ClientId { get; set; }
 
-    protected async override Task OnInitializedAsync()
-    {
-        Client = await clientService.GetClientAsync(clientId);
-    }
-    
+	protected async override Task OnInitializedAsync()
+	{
+		Client = await clientService.GetClientAsync(clientId);
+		ClientMemberships = await clientsMembershipsService.GetClientMembershipsAsync(Client.Id);
+	}
 
-    private void ButtonHandler()
-    {
-        navigationManager
-             .NavigateTo($"/buymembership/{Client.Id}");
 
-    }
+	private void ButtonHandler()
+	{
+		navigationManager
+				.NavigateTo($"/buymembership/{Client.Id}");
+
+	}
+	private void CheckInButtonHandler()
+	{
+		//kerje le ujra a kliens berleteit a vegen
+	}
 
 	void OnDescriptionChanged(ChangeEventArgs args)
 	{
@@ -186,35 +163,51 @@ else
 	{
 		/*
 		if (Value.Trim().Length > 0)
-		{
-			switch (columnName)
-			{
-				case "Description":
+					{
+					switch (columnName)
+					{
+					case "Description":
 					TypeOfMemberships = TypeOfMemberships.Where(x => x.Description.Contains(Value)).ToList();
-					break;
+				break;
 				case "ValidityInDays":
 					TypeOfMemberships = TypeOfMemberships.Where(x => x.ValidityInDays.Equals(Int32.Parse(Value))).ToList();
-					break;
+				break;
 				case "ValidityInCheckIn":
 					TypeOfMemberships = TypeOfMemberships.Where(x => x.ValidityInCheckIn.Equals(Int32.Parse(Value))).ToList();
-					break;
+				break;
 				case "GymId":
 					TypeOfMemberships = TypeOfMemberships.Where(x => getGymName(x.GymId).Contains(Value)).ToList();
-					break;
+				break;
 				default:
 					TypeOfMemberships = typeOfMembershipService.GetTypeOfMemberships();
 					break;
-			}
+		}
 		}
 		else
-		{
+			{
 			TypeOfMemberships = typeOfMembershipService.GetTypeOfMemberships();
 		}*/
 	}
-	private string getGymName(string gymId)
+	private string GetGymName(string gymId)
 	{
 		Gym gym = gymService.GetGym(gymId);
 		return gym.Name;
+	}
+
+	private string GetMembershipDescription(string typeMembershipId)
+	{
+		string description = "";
+		TypeOfMembership typeOfMembership = typeOfMembershipService.GetTypeOfMembership(typeMembershipId);
+		if(typeOfMembership != null)
+		{
+			description = typeOfMembership.Description;
+		}
+		return description;
+	}
+	private void NavigateEditPageButtonHandler()
+	{
+		//navigationManager.NavigateTo($"/editclientinfo/{Client.Id}");
+		navigationManager.NavigateTo($"/editclientinfo");
 	}
 
 }
