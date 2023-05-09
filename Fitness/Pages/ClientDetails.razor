@@ -198,7 +198,6 @@ else
 	private bool ValidityInDays(int vd, DateTime dfu, int checkins, TimeSpan fTime, TimeSpan tTime)
 	{
 		DateTime currentDT = DateTime.Now;
-
 		if (currentDT.Subtract(dfu).Days < vd && currentDT.Hour > fTime.Hours && currentDT.Hour< tTime.Hours)
 		{
 			return true;
