@@ -7,6 +7,7 @@ namespace Fitness.IService
 		Task SaveAsync(ClientsMemberships clientsMemberships);
 
 		Task UpdateAsync(ClientsMemberships clientsMemberships);
+
 		Task<List<ClientsMemberships>> GetClientsMembershipsAsync();
 
 		Task<List<ClientsMemberships>> GetClientAllMembershipsAsync(string clientId);

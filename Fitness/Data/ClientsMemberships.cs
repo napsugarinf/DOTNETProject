@@ -32,4 +32,5 @@ namespace Fitness.Data
         public string TypeOfMembersip { get; set; }
         public string Gym { get; set; }
     }
+
 }
