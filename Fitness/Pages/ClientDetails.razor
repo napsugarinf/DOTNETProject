@@ -46,7 +46,7 @@ else
 			</h6>
 		</div>
 		<div class="col-md-4" style="margin-left:-90px; margin-top:12px;">
-			<input style="margin-left:-40px" onchange=@OnDescriptionChanged oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+			<input style="margin-left:-40px" onchange=@OnDescriptionChangedAsync oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
 		</div>
 	</div>
 	<div class="row">
@@ -61,6 +61,9 @@ else
 			</td>
 			<td align="center">
 				Date of purchasing
+			</td>
+			<td>
+				Starting date
 			</td>
 			<td align="center">
 				Check ins
@@ -91,9 +94,14 @@ else
 							@Membership.DateOfPurchasing
 						</span>
 					</td>
+						<td align="center">
+							<span>
+								@Membership.DateOfFirstUse
+							</span>
+						</td>
 					<td align="center">
 						<span>
-							x / @Membership.CheckInsSoFa
+							@GetValidityInCheckIn(Membership.MembershipId) / @Membership.CheckInsSoFa
 						</span>
 					</td>
 					<td align="center">
@@ -102,9 +110,13 @@ else
 						</span>
 					</td>
 					<td align="center">
-						@if (Membership.Validity)
+						@if (Membership.Validity && Membership.DateOfFirstUse.Subtract(DateTime.Now).Days == 0)
 						{
-							<button class="btn btn-primary" @onclick="() => CheckInButtonHandler()">Check in</button>
+							<button class="btn btn-primary" @onclick="() => CheckInButtonHandler(Membership.ClientsMembershipsId)">Check in</button>
+						}
+						else if (!Membership.Validity )
+						{
+							<p>invalid membership</p>
 						}
 					</td>
 				</tr>
@@ -114,7 +126,7 @@ else
 	</div>
 
     <div class="row">
-        <button class="btn btn-primary" @onclick="() => ButtonHandler()">
+		<button class="btn btn-primary" @onclick="() => BuyMembershipButtonHandler()">
             <span class="oi oi-plus" aria-hidden="true"></span> Buy Membership
         </button>
     </div>
@@ -130,6 +142,7 @@ else
 	Client Client;
 	List<Client> Clients = new List<Client>();
 	public List<ClientsMemberships> ClientMemberships = new List<ClientsMemberships>();
+	//public List<ClientsMembershipsExtended> ClientsMembershipsExtendeds = new List<ClientsMembershipsExtended>(); 
 
 	[Parameter]
 	public string? ClientId { get; set; }
@@ -137,56 +150,81 @@ else
 	protected async override Task OnInitializedAsync()
 	{
 		Client = await clientService.GetClientAsync(clientId);
-		ClientMemberships = await clientsMembershipsService.GetClientMembershipsAsync(Client.Id);
+		ClientMemberships = await clientsMembershipsService.GetClientAllMembershipsAsync(Client.Id);
+		//ClientsMembershipsExtendeds = await clientsMembershipsService.SearchClientMembershipDescriptioAsync(Client.Id);
+
 	}
 
 
-	private void ButtonHandler()
+	private void BuyMembershipButtonHandler()
 	{
 		navigationManager
 				.NavigateTo($"/buymembership/{Client.Id}");
 
 	}
-	private void CheckInButtonHandler()
+	private async void CheckInButtonHandler(string cmId)
 	{
-		//kerje le ujra a kliens berleteit a vegen
+		ClientsMemberships cm = await clientsMembershipsService.GetClientMembershipAsync(cmId);
+		if(cm != null)
+		{
+			TypeOfMembership typeOfMembership = await typeOfMembershipService.GetTypeOfMembershipAsync(cm.MembershipId);
+			if(typeOfMembership!= null)
+			{
+				bool validityTime = ValidityInDays(typeOfMembership.ValidityInDays,
+					cm.DateOfFirstUse, cm.CheckInsSoFa,typeOfMembership.FromTime,typeOfMembership.ToTime);
+				if(typeOfMembership.ValidityInCheckIn > cm.CheckInsSoFa && validityTime)
+				{
+					cm.CheckInsSoFa++;
+					await clientsMembershipsService.UpdateAsync(cm);
+					CheckIns checkIns = new CheckIns();
+					checkIns.ClientId = cm.ClientId;
+					checkIns.MembershipId = cm.MembershipId;
+					checkIns.Date = DateTime.Now;
+					checkIns.InsertedByUserId = "";////////////////////////// Nincs megadva a UserId ///////////////////////////////
+					checkIns.Barcode = cm.Barcode;
+					checkIns.GymId = cm.GymId;
+
+					await checkInService.SaveAsync(checkIns);
+				}
+				if( (cm.DateOfFirstUse.Day+typeOfMembership.ValidityInDays) < DateTime.Now.Day)
+				{
+					cm.Validity = false;
+					await clientsMembershipsService.UpdateAsync(cm);
+				}
+			}
+		}
+		ClientMemberships = await clientsMembershipsService.GetClientAllMembershipsAsync(Client.Id);
+	}
+	private bool ValidityInDays(int vd, DateTime dfu, int checkins, TimeSpan fTime, TimeSpan tTime)
+	{
+		DateTime currentDT = DateTime.Now;
+
+		if (currentDT.Subtract(dfu).Days < vd && currentDT.Hour > fTime.Hours && currentDT.Hour< tTime.Hours)
+		{
+			return true;
+		}
+		return false;
+
 	}
 
-	void OnDescriptionChanged(ChangeEventArgs args)
+	async Task OnDescriptionChangedAsync(ChangeEventArgs args)
 	{
 		string values = args.Value.ToString();
-		membershipFilteringList(values, "Description");
+		await membershipFilteringList(values);
 	}
 
 	//Filtering
-	protected async Task membershipFilteringList(String Value, string columnName)
+	protected async Task membershipFilteringList(String Value)
 	{
-		/*
+
 		if (Value.Trim().Length > 0)
-					{
-					switch (columnName)
-					{
-					case "Description":
-					TypeOfMemberships = TypeOfMemberships.Where(x => x.Description.Contains(Value)).ToList();
-				break;
-				case "ValidityInDays":
-					TypeOfMemberships = TypeOfMemberships.Where(x => x.ValidityInDays.Equals(Int32.Parse(Value))).ToList();
-				break;
-				case "ValidityInCheckIn":
-					TypeOfMemberships = TypeOfMemberships.Where(x => x.ValidityInCheckIn.Equals(Int32.Parse(Value))).ToList();
-				break;
-				case "GymId":
-					TypeOfMemberships = TypeOfMemberships.Where(x => getGymName(x.GymId).Contains(Value)).ToList();
-				break;
-				default:
-					TypeOfMemberships = typeOfMembershipService.GetTypeOfMemberships();
-					break;
-		}
+		{
+			ClientMemberships = ClientMemberships.Where(x => GetMembershipDescription(x.MembershipId).Contains(Value)).ToList();
 		}
 		else
-			{
-			TypeOfMemberships = typeOfMembershipService.GetTypeOfMemberships();
-		}*/
+		{
+			ClientMemberships = await clientsMembershipsService.GetClientAllMembershipsAsync(Client.Id);
+		}
 	}
 	private string GetGymName(string gymId)
 	{
@@ -204,6 +242,17 @@ else
 		}
 		return description;
 	}
+	private string GetValidityInCheckIn(string typeMembershipId)
+	{
+		string validityInCheckIn = "";
+		TypeOfMembership typeOfMembership = typeOfMembershipService.GetTypeOfMembership(typeMembershipId);
+		if (typeOfMembership != null)
+		{
+			validityInCheckIn = typeOfMembership.ValidityInCheckIn.ToString();
+		}
+		return validityInCheckIn;
+	}
+
 	private void NavigateEditPageButtonHandler()
 	{
 		//navigationManager.NavigateTo($"/editclientinfo/{Client.Id}");

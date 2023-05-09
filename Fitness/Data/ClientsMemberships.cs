@@ -27,7 +27,9 @@ namespace Fitness.Data
 
         public string GymId { get;set; }
 
-
-
+    }
+    public class ClientsMembershipsExtended: ClientsMemberships { 
+        public string TypeOfMembersip { get; set; }
+        public string Gym { get; set; }
     }
 }
