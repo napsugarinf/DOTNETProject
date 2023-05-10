@@ -12,7 +12,7 @@
 
 
 
-<div class="row">
+<div class="col-md-12" style="margin-top: 20px">
     <div class="col-md-4">
         <div class="row">
             <div class="col-md-4">
@@ -28,7 +28,7 @@
             <div class="col-md-4"> </div>
             <div class="col-md-8">
                 <button class="btn btn-primary" @onclick="@(e=>Save())">Save</button>
-                <button class="btn btn-primary" @onclick="@(e=>Reset())" style="float:right;">Reset</button>
+                <button class="btn btn-warning" @onclick="@(e=>Reset())" style="float:right;">Reset</button>
             </div>
         </div>
     </div>
@@ -53,7 +53,7 @@
                         <td>@gym.Id</td>
                         <td>
                             <button class="btn btn-primary" @onclick="@(e=>Edit(gym.Id))">Edit</button>
-                            <button class="btn btn-primary" @onclick="@(e=>Delete(gym.Id))">Delete</button>
+                            <button class="btn btn-danger" @onclick="@(e=>Delete(gym.Id))">Delete</button>
                         </td>
                     </tr>
                 }
@@ -84,13 +84,18 @@
                         @gym.TypeOfMemberships
                         @foreach (var membership in @gym.TypeOfMemberships)
                         {
-                            <div>@membership.Description</div>
+                            
+                        <td>@membership.Id</td>
+                        <td>@membership.Description</td>
                         }
                     </td>
-                        <td></td>
+
                         <td>
-                            <button class="btn btn-primary" @onclick="@(e=>Edit(gym.Id))">Edit</button>
-                            <button class="btn btn-primary" @onclick="@(e=>Delete(gym.Id))">Delete</button>
+                        <button class="btn btn-primary" @onclick="@(e=>Edit(gym.Id))">Edit</button>
+                        </td>
+
+                        <td>
+                            <button class="btn btn-danger" @onclick="@(e=>Delete(gym.Id))">Delete</button>
                         </td>
                     </tr>
                 }
