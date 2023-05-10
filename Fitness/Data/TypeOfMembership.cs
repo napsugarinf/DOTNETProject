@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fitness.Data
 {
@@ -14,7 +15,7 @@ namespace Fitness.Data
         public int ValidityInDays { get; set; } = 0;
         public int ValidityInCheckIn { get; set; } = 0;
         public bool isDeleted { get; set; } = false;
-        public string GymId { get; set; } = string.Empty;
+ 		public string GymId { get; set; } = string.Empty;
         public TimeSpan FromTime { get; set; } = TimeSpan.Zero;
         public TimeSpan ToTime { get; set; }= TimeSpan.Zero;
         public int NrOfPossibleUsagesDaily { get; set; } = 0;

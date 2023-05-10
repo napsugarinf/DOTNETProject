@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fitness.Data
 {
@@ -15,5 +16,7 @@ namespace Fitness.Data
 		public string Name { get; set; } 
 
         public bool isDeleted { get; set; }
+
+        public ICollection<TypeOfMembership> TypeOfMemberships { get; set; }
     }
 }

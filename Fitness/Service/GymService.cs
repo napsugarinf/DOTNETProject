@@ -1,5 +1,6 @@
 ﻿using Fitness.Data;
 using Fitness.IService;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Fitness.Service
@@ -45,5 +46,37 @@ namespace Fitness.Service
                 _gymTable.ReplaceOne(x => x.Id == gym.Id, gym);
             }
         }
+
+
+        public async Task<List<Gym>> GetGymsWithMemberships()
+        {
+            var filter = Builders<Gym>.Filter.Eq(g => g.isDeleted, false);
+
+            var lookupStage = new BsonDocument("$lookup", new BsonDocument
+    {
+        { "from", "TypeOfMemberships" },
+        { "localField", "GymId" },
+        { "foreignField", "GymId" },
+        { "as", "TypeOfMemberships" }
+    });
+
+            var projectStage = new BsonDocument("$project", new BsonDocument
+    {
+        { "TypeOfMemberships.GymId", 0 }
+    });
+
+            var pipeline = new[]
+            {
+        PipelineStageDefinitionBuilder.Match(filter),
+        lookupStage,
+        projectStage
+    };
+
+            var cursor = await _gymTable.AggregateAsync<Gym>(pipeline);
+            return await cursor.ToListAsync();
+        }
+
+
     }
 }
+

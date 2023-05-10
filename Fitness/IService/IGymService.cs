@@ -8,6 +8,8 @@ namespace Fitness.IService
             Gym GetGym(string gymId);
             List<Gym> GetGyms();
             string Delete(string gymId);
+        Task<List<Gym>> GetGymsWithMemberships();
+
 
         }
 }

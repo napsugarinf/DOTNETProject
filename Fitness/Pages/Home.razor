@@ -23,16 +23,16 @@
             </GridColumn>  *@
 
             <GridColumn Field=@nameof(Client.Name) HeaderText="Name" Width="200px"></GridColumn>
+            <GridColumn Field=@nameof(Client.Id) HeaderText="Client Id" Width="200px"></GridColumn>
             <GridColumn Field=@nameof(Client.IdCard) HeaderText="IdCard" Width="200px"></GridColumn>
             <GridColumn Field=@nameof(Client.Address) HeaderText="Address" Width="200px"></GridColumn>
             <GridColumn Field=@nameof(Client.Email) HeaderText="Email" Width="200px"></GridColumn>
             <GridColumn Field=@nameof(Client.PhoneNr) HeaderText="PhoneNr" Width="200px"></GridColumn>
-            <GridColumn Width="200px">
-                <Template>
-                    <button class="btn btn-primary" @onclick="() => ButtonHandler()">Edit</button>
+            <GridColumn Field=@nameof(Client.Id)  Width="200px">
+                <Template Context="context">
+                    <button class="btn btn-primary" @onclick="() => ButtonHandler((Client)context)">Edit</button>
                 </Template>
             </GridColumn>
-
 
         </GridColumns>
     </SfGrid>
@@ -83,7 +83,7 @@
 
 
 @code{
-   
+
     Client Client = new Client();
     List<Client> Clients = new List<Client>();
     List<ClientSpecial> ClientSpecials = new List<ClientSpecial>();
@@ -130,10 +130,12 @@
        
     
     @inject NavigationManager navigationManager
-    private void ButtonHandler()
+    private void ButtonHandler(Client client)
     {
+        string ClientId = client.Id;
+        Console.WriteLine(ClientId);
         navigationManager
-             .NavigateTo($"/clientdetails/{Client.Id}");
+             .NavigateTo($"/clientdetails/{ClientId}");
     }
     
     

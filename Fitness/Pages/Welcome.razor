@@ -5,53 +5,9 @@
 @using System.Diagnostics;
 @inject Fitness.IService.IUserService userService
 
-@*
 <h3>
- @*    <div class="col-md-8">
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Name  </th>
-                    <th>Role  </th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (userList.Count() > 0)
-                {
-                    @foreach (var u in userList)
-                    {
-                        <tr>
-                            <td>@u.Name</td>
-                            <td>@u.Role</td>                   
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
-  
-</h3>
-
-<h3>
-    <div class="row">      
-        <div class="col-md-8">
-            <button class="btn btn-primary" @onclick="@(e=>UserHandler("6454ad03066dfa84dcf9bedb"))">User</button>
-        </div>
-    </div>
-</h3>
-
-<h3>
-     <div class="row">
-            <div class="col-md-8">
-            <button class="btn btn-primary" @onclick="@(e=>UserHandler("6454ac5d066dfa84dcf9bed9"))" style="background-color:red">Admin</button>
-            </div>
-     </div>
-</h3>
-*@
-
-<h3>
-    <div class="col-md-2"
-    <form method="post">
+    <div class="col-md-2" >
+         @* <form method="post">  *@
         <div class="form-group">
             <label for="username">Username</label>
             <input id="username" name="username" class="form-control" />
@@ -60,8 +16,8 @@
             <label for="password">Password</label>
             <input id="password" name="password" type="password" class="form-control" />
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+        <button type="submit" class="btn btn-primary"  @onclick="() => ButtonHandler()">Login</button>
+    @* </form> *@
     </div>
 </h3>
 
@@ -83,11 +39,10 @@
     }
 
     @inject NavigationManager navigationManager
-    private void UserHandler(string uId)
+    private void ButtonHandler()
     {
-        userId = uId;
         navigationManager
-             .NavigateTo($"/home/{userId}");
+             .NavigateTo($"/home");
     }
 
 
