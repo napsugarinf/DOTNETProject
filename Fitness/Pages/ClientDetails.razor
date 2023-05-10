@@ -4,155 +4,257 @@
 
 @using Fitness.Data
 @using System.Text.RegularExpressions;
+@inject NavigationManager navigationManager
+@inject Fitness.IService.ITypeOfMembership typeOfMembershipService
+@inject Fitness.IService.IGymService gymService
 @inject Fitness.IService.IClientService clientService
+@inject Fitness.IService.IClientsMembershipsService clientsMembershipsService
+@inject Fitness.IService.ICheckInService checkInService
 
-
-<div class="row">
-    <div class="col-md-4">
-        <EditForm Model="@Client" OnValidSubmit="@HandleValidSubmit">
-            <DataAnnotationsValidator />
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4">
-                    <label> Id card: </label>
-                </div>
-                <div class="col-md-8">
-                    <input @bind="Client.IdCard" style="width:100%;" placeholder="Client id card" />
-                    <ValidationMessage For="@(() => Client.IdCard)" />
-                </div>
-            </div>
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4">
-                    <label> Name: </label>
-                </div>
-                <div class="col-md-8">
-                    <input @bind="Client.Name" style="width:100%;" placeholder="Client name" />
-                    <ValidationMessage For="@(() => Client.Name)" />
-                </div>
-            </div>
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4">
-                    <label> Phone Number: </label>
-                </div>
-                <div class="col-md-8">
-                    <input @bind="Client.PhoneNr" style="width:100%;" placeholder="ex. +40*********" />
-                    <ValidationMessage For="@(() => Client.PhoneNr)" />
-                </div>
-            </div>
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4">
-                    <label> Email: </label>
-                </div>
-                <div class="col-md-8">
-                    <input @bind="Client.Email" style="width:100%;" placeholder=" ex. name@gmail.com" />
-                    <ValidationMessage For="@(() => Client.Email)" />
-                </div>
-            </div>
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4">
-                    <label> Address: </label>
-                </div>
-                <div class="col-md-8">
-                    <input @bind="Client.Address" style="width:100%;" placeholder="nr. str. city" />
-                    <ValidationMessage For="@(() => Client.Address)" />
-                </div>
-            </div>
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4">
-                    <label> Barcode: </label>
-                </div>
-                <div class="col-md-8">
-                    <button type="button" class="btn btn-primary" @onclick="@(e=>GenerateBarcode())">Generate barcode</button>
-                    <label>@Client.Barcode</label>
-                    <ValidationMessage For="@(() => Client.Barcode)" />
-                </div>
-            </div>
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4">
-                    <label> Additional Information: </label>
-                </div>
-                <div class="col-md-8">
-                    <textarea @bind="Client.AdditionanInformation" style="width:100%;" placeholder="Additional information" />
-                </div>
-            </div>
-            <div class="row" style="margin-top:5px">
-                <div class="col-md-4"> </div>
-                <div class="col-md-8">
-                    <button class="btn btn-primary" type="submit">Submit</button>
-                    <button type="button" class="btn btn-primary" @onclick="@(e=>Reset())" style="float:right; margin-right:10px; background-color:red">Reset</button>
-                </div>
-            </div>
-
-
-        </EditForm>
-
+@if(Client == null || Client.IsDeleted == true)
+{
+	<p>The client's data could not be loaded</p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <img src="@Client.Photo" alt="Alternate Text" style="width:220px; height:180px; margin:30px" />
+        </div>
+        <div class="col-md-4" style="margin-top:30px">
+            <h3 style=" color:deepskyblue">@Client.Name</h3>
+			<a @onclick="() =>NavigateEditPageButtonHandler()">Edit Informations</a>
+            <ul>
+                <li><b>Id card:</b> @Client.IdCard</li>
+                <li><b>Email address:</b>  @Client.Email</li>
+                <li><b>Phone number:</b> @Client.PhoneNr</li>
+                <li><b>Address:</b> - @Client.Address</li>
+                <li><b>Barcode: @Client.Barcode</b></li>
+                @*@if (@Client.AdditionalInformation.Length > 1)
+                {
+                    <li>@Client.AdditionalInformation</li>
+                }*@
+            </ul>
+        </div>
     </div>
-    <div class="alert alert-primary @HideAlert" role="alert">
-        @AlertContent
-    </div>
+    <h4>Memberships</h4>
+	<div class="row">
+		<div class="col-md-4" style="margin-bottom:7px; margin-left:30px;">
+			<h6>
+				<span class="oi oi-magnifying-glass" aria-hidden="true"></span>
+				Search membership
+			</h6>
+		</div>
+		<div class="col-md-4" style="margin-left:-90px; margin-top:12px;">
+			<input style="margin-left:-40px" onchange=@OnDescriptionChangedAsync oninput="(this.dispatchEvent(new CustomEvent('change', {bubbles: true})))" />
+		</div>
+	</div>
+	<div class="row">
+	<table class="table table-striped">
+		<tr style="background-color:#336699; height:50px">
+			<td align="center"></td>
+			<td align="center">
+				Description
+			</td>
+			<td align="center">
+				Price
+			</td>
+			<td align="center">
+				Date of purchasing
+			</td>
+			<td>
+				Starting date
+			</td>
+			<td align="center">
+				Check ins
+			</td>
+			<td align="center">
+				Gym 
+			</td>
+			<td align="center">
+			</td>
+		</tr>
+		<tbody>
+				@foreach (var Membership in ClientMemberships)
+			{
+				<tr>
+					<td align="center"></td>
+					<td align="center">
+						<span>
+							@GetMembershipDescription(Membership.MembershipId)
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.Price
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@Membership.DateOfPurchasing
+						</span>
+					</td>
+						<td align="center">
+							<span>
+								@Membership.DateOfFirstUse
+							</span>
+						</td>
+					<td align="center">
+						<span>
+							@GetValidityInCheckIn(Membership.MembershipId) / @Membership.CheckInsSoFa
+						</span>
+					</td>
+					<td align="center">
+						<span>
+							@GetGymName(Membership.GymId)
+						</span>
+					</td>
+					<td align="center">
+						@if (Membership.Validity && Membership.DateOfFirstUse.Subtract(DateTime.Now).Days == 0)
+						{
+							<button class="btn btn-primary" @onclick="() => CheckInButtonHandler(Membership.ClientsMembershipsId)">Check in</button>
+						}
+						else if (!Membership.Validity )
+						{
+							<p>invalid membership</p>
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	</div>
 
-</div>
+    <div class="row">
+		<button class="btn btn-primary" @onclick="() => BuyMembershipButtonHandler()">
+            <span class="oi oi-plus" aria-hidden="true"></span> Buy Membership
+        </button>
+    </div>
+}
+
+
 
 @code {
-    Client Client = new Client();
-    List<Client> Clients = new List<Client>();
+	//Sara id "64568d675b43a00177c57031"
+	//Emily id "64523d069a001465a6b9f99f"
+	private string clientId = "64568d675b43a00177c57031";
 
-    [Parameter]
-    public string? ClientId { get; set; }
+	Client Client;
+	List<Client> Clients = new List<Client>();
+	public List<ClientsMemberships> ClientMemberships = new List<ClientsMemberships>();
+	//public List<ClientsMembershipsExtended> ClientsMembershipsExtendeds = new List<ClientsMembershipsExtended>(); 
 
-    protected override void OnInitialized()
-    {
-        GetClients();
-    }
-    private void GetClients()
-    {
-        Clients = clientService.GetClients();
-    }
-    private async Task HandleValidSubmit()
-    {
-        EditContext editContext = new EditContext(Client);
-        var isValid = editContext.Validate();
-        if (isValid)
-        {
-            Client.InsertedByDate = DateTime.Now;
-            clientService.SaveOrUpdate(Client);
-            DoSomething();
-            Reset();
-        }
-        GetClients();
-    }
-    private void Reset()
-    {
-        Client = new Client();
+	[Parameter]
+	public string? ClientId { get; set; }
 
-    }
-    private void GenerateBarcode()
-    {
-        Guid guid = Guid.NewGuid();
-        string uniqueId = Convert.ToBase64String(guid.ToByteArray());
-        Client.Barcode = uniqueId.Replace("/", "").Replace("+", "").Substring(0, 13);
-        //uniqueId = uniqueId.Replace("/", "").Replace("+", "").Substring(0, 10);
-        //return uniqueId;
-    }
-    private void Delete(string clientId)
-    {
-        clientService.Delete(clientId);
-        GetClients();
-    }
+	protected async override Task OnInitializedAsync()
+	{
+		Client = await clientService.GetClientAsync(clientId);
+		ClientMemberships = await clientsMembershipsService.GetClientAllMembershipsAsync(Client.Id);
+		//ClientsMembershipsExtendeds = await clientsMembershipsService.SearchClientMembershipDescriptioAsync(Client.Id);
 
-    private string HideAlert { get; set; } = "d-none";
-    private string AlertContent { get; set; } = "This is a primary alert—check it out!";
-    private void DoSomething()
-    {
-        if (HideAlert == "")
-        {
-            HideAlert = "d-none";
-            AlertContent = "This is a primary alert—check it out!";
-        }
-        else
-        {
-            HideAlert = "";
-            AlertContent = "The save is successful";
-        }
-    }
+	}
+
+
+	private void BuyMembershipButtonHandler()
+	{
+		navigationManager
+				.NavigateTo($"/buymembership/{Client.Id}");
+
+	}
+	private async void CheckInButtonHandler(string cmId)
+	{
+		ClientsMemberships cm = await clientsMembershipsService.GetClientMembershipAsync(cmId);
+		if(cm != null)
+		{
+			TypeOfMembership typeOfMembership = await typeOfMembershipService.GetTypeOfMembershipAsync(cm.MembershipId);
+			if(typeOfMembership!= null)
+			{
+				bool validityTime = ValidityInDays(typeOfMembership.ValidityInDays,
+					cm.DateOfFirstUse, cm.CheckInsSoFa,typeOfMembership.FromTime,typeOfMembership.ToTime);
+				if(typeOfMembership.ValidityInCheckIn > cm.CheckInsSoFa && validityTime)
+				{
+					cm.CheckInsSoFa++;
+					await clientsMembershipsService.UpdateAsync(cm);
+					CheckIns checkIns = new CheckIns();
+					checkIns.ClientId = cm.ClientId;
+					checkIns.MembershipId = cm.MembershipId;
+					checkIns.Date = DateTime.Now;
+					checkIns.InsertedByUserId = "";////////////////////////// Nincs megadva a UserId ///////////////////////////////
+					checkIns.Barcode = cm.Barcode;
+					checkIns.GymId = cm.GymId;
+
+					await checkInService.SaveAsync(checkIns);
+				}
+				if( (cm.DateOfFirstUse.Day+typeOfMembership.ValidityInDays) < DateTime.Now.Day)
+				{
+					cm.Validity = false;
+					await clientsMembershipsService.UpdateAsync(cm);
+				}
+			}
+		}
+		ClientMemberships = await clientsMembershipsService.GetClientAllMembershipsAsync(Client.Id);
+	}
+	private bool ValidityInDays(int vd, DateTime dfu, int checkins, TimeSpan fTime, TimeSpan tTime)
+	{
+		DateTime currentDT = DateTime.Now;
+		if (currentDT.Subtract(dfu).Days < vd && currentDT.Hour > fTime.Hours && currentDT.Hour< tTime.Hours)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	async Task OnDescriptionChangedAsync(ChangeEventArgs args)
+	{
+		string values = args.Value.ToString();
+		await membershipFilteringList(values);
+	}
+
+	//Filtering
+	protected async Task membershipFilteringList(String Value)
+	{
+
+		if (Value.Trim().Length > 0)
+		{
+			ClientMemberships = ClientMemberships.Where(x => GetMembershipDescription(x.MembershipId).Contains(Value)).ToList();
+		}
+		else
+		{
+			ClientMemberships = await clientsMembershipsService.GetClientAllMembershipsAsync(Client.Id);
+		}
+	}
+	private string GetGymName(string gymId)
+	{
+		Gym gym = gymService.GetGym(gymId);
+		return gym.Name;
+	}
+
+	private string GetMembershipDescription(string typeMembershipId)
+	{
+		string description = "";
+		TypeOfMembership typeOfMembership = typeOfMembershipService.GetTypeOfMembership(typeMembershipId);
+		if(typeOfMembership != null)
+		{
+			description = typeOfMembership.Description;
+		}
+		return description;
+	}
+	private string GetValidityInCheckIn(string typeMembershipId)
+	{
+		string validityInCheckIn = "";
+		TypeOfMembership typeOfMembership = typeOfMembershipService.GetTypeOfMembership(typeMembershipId);
+		if (typeOfMembership != null)
+		{
+			validityInCheckIn = typeOfMembership.ValidityInCheckIn.ToString();
+		}
+		return validityInCheckIn;
+	}
+
+	private void NavigateEditPageButtonHandler()
+	{
+		//navigationManager.NavigateTo($"/editclientinfo/{Client.Id}");
+		navigationManager.NavigateTo($"/editclientinfo");
+	}
 
 }

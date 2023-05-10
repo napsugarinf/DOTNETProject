@@ -1,4 +1,5 @@
-﻿@page "/addnewclient"
+﻿@page "/editclientinfo"
+@*@page "/editclientinfo/{ClientId:String}"*@
 
 <PageTitle>New Client</PageTitle>
 
@@ -8,6 +9,12 @@
 @inject IJSRuntime JSRuntime
 @inject Fitness.IService.IClientService clientService
 
+<h3>Edit Client Information</h3>
+@if( Client == null)
+{
+    <p>The client's data could not be loaded</p>
+}
+else{
 <div class="row">
     <div class="col-md-4">
         <EditForm Model="@Client" OnValidSubmit="@HandleValidSubmit">
@@ -57,7 +64,7 @@
                 <ValidationMessage For="@(() => Client.Address)" />
             </div>
         </div>
-        <div class="row" style="margin-top:5px">
+        @*<div class="row" style="margin-top:5px">
             <div class="col-md-4">
                 <label> Barcode: </label>
             </div>
@@ -66,7 +73,7 @@
                 <label>@Client.Barcode</label>
                 <ValidationMessage For="@(() => Client.Barcode)" />
             </div>
-        </div>
+        </div>*@
         <div class="row" style="margin-top:5px">
             <div class="col-md-4">
                 <button type="button" class="btn btn-primary" @onclick="Capture">
@@ -92,7 +99,7 @@
             <div class="col-md-4"> </div>
             <div class="col-md-8">
                     <button class="btn btn-primary" type="submit">Submit</button>
-                    <button type="button" class="btn btn-primary" @onclick="@(e=>Reset())" style="float:right; margin-right:10px; background-color:red">Reset</button>
+                    <button type="button" class="btn btn-primary" @onclick="@(e=>ResetAsync())" style="float:right; margin-right:10px; background-color:red">Reset</button>
             </div>
         </div>
             @if (clientIsSave)
@@ -103,94 +110,51 @@
             }
     </EditForm>
     </div>
-    
-    
-    <div class="col-md-6">
-        <button class="btn btn-primary" @onclick="() => ButtonHandler()">
-            <span class="oi oi-plus" aria-hidden="true"></span> Buy Membership
-        </button>
-    </div>
     @if (imageUrl.Length > 0)
     {
-        <div class="col-md-6" style="width:300px; height:300px; margin:110px">
+        <div class="col-md-6" style="width:300px; height:300px; margin:150px;">
             <div id="results">Your image</div>
             <img src="@imageUrl" alt="Alternate Text" style="width:240px; height:200px;" />
         </div>
     }
-    @* <div class="col-md-8">
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Client Id   </th>
-                    <th>Name  </th>
-                    <th>Phone Number  </th>
-                    <th>Email   </th>
-                    <th>Inserted By Date</th>
-                    <th>Photo</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Clients.Count() > 0)
-                {
-                    @foreach (var cli in Clients)
-                    {
-                    <tr>
-                            <td>@cli.Id</td>
-                            <td>@cli.Name</td>
-                            <td>@cli.PhoneNr</td>
-                            <td>@cli.Email</td>
-                            <td>@cli.InsertedByDate</td>
-                            <td><img src="@cli.Photo" alt="Alternate Text" style="width:40px; height:30px;" /></td>
-                            <td>
-                                <button class="btn btn-primary" @onclick="@(e=>Delete(cli.Id))">Delete</button>
-                            </td>
-                    </tr>    
-                    }
-
-                }
-            </tbody>
-        </table>
-    </div>*@
 </div>
-
+}
 
 @code {
-    Client Client = new Client();
-    List<Client> Clients = new List<Client>();
+    Client Client ;
+    private string clientId = "64568d675b43a00177c57031";
     bool clientIsSave = false;
-    string imageUrl="";
+    string imageUrl;
 
-    protected override void OnInitialized()
+    [Parameter]
+    public string? ClientId { get; set; }
+
+    protected async override Task OnInitializedAsync()
     {
-        GetClients();  
-    }
-    private void GetClients()
-    {
-        Clients = clientService.GetClients();    
+        Client = await clientService.GetClientAsync(clientId);
+        imageUrl = Client.Photo;
     }
     private async Task HandleValidSubmit()
     {
         EditContext editContext = new EditContext(Client);
         var isValid = editContext.Validate();
-        if (isValid )
+        if (isValid)
         {
             if (imageUrl.Length > 0)
             {
                 Client.Photo = imageUrl;
             }
-            await clientService.SaveAsync(Client);
+            await clientService.UpdateAsync(Client);
             clientIsSave = true;
-            Reset();
         }
         else
         {
             clientIsSave = false;
         }
-        GetClients();
     }
-    private void Reset()
+    private async Task ResetAsync()
     {
-        Client = new Client();
+        Client = await clientService.GetClientAsync(clientId);
 
     }
     private void GenerateBarcode()
@@ -198,38 +162,21 @@
         Guid guid = Guid.NewGuid();
         string uniqueId = Convert.ToBase64String(guid.ToByteArray());
         Client.Barcode = uniqueId.Replace("/", "").Replace("+", "").Substring(0, 13);
-        //uniqueId = uniqueId.Replace("/", "").Replace("+", "").Substring(0, 10);
-        //return uniqueId;
-    }
-    private void Delete(string clientId)
-    {
-        clientService.Delete(clientId);
-        GetClients();
     }
 
-    private void ButtonHandler()
+    public async void Capture()
     {
-        clientIsSave = true;
-        if (clientIsSave)
-        {
-            Client.Id = "64523d069a001465a6b9f99f";
-            navigationManager
-             .NavigateTo($"/buymembership/{Client.Id}");
+        imageUrl = await JSRuntime.InvokeAsync<string>("take_snapshot");
+        StateHasChanged();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+
+        if(firstRender){
+            JSRuntime.InvokeVoidAsync("ready",this);
         }
 
     }
 
-    public async void Capture(){
-        imageUrl= await JSRuntime.InvokeAsync<string>("take_snapshot");
-        StateHasChanged();
-    }
-
-    protected override void OnAfterRender(bool firstRender){
-        
-        /*if(firstRender){
-            JSRuntime.InvokeVoidAsync("ready",this);
-        }*/
-        JSRuntime.InvokeVoidAsync("ready",this);
-
-    }
 }

@@ -51,7 +51,16 @@ namespace Fitness.Service
             
         }
 
-        public void SaveOrUpdate(Client client)
+        public async Task UpdateAsync(Client client)
+        {
+            var clientObj = _clientTable.FindAsync(x => x.Id == client.Id);
+            if (clientObj.Result != null)
+            {
+                await _clientTable.ReplaceOneAsync(x => x.Id == client.Id, client);
+            }
+        }
+
+		public void SaveOrUpdate(Client client)
         {
             var clientObj = _clientTable.Find(x => x.Id == client.Id).FirstOrDefault();
             if (clientObj == null)
