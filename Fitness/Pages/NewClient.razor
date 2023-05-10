@@ -209,10 +209,10 @@
 
     private void ButtonHandler()
     {
-        clientIsSave = true;
+        //clientIsSave = true;
         if (clientIsSave)
         {
-            Client.Id = "64523d069a001465a6b9f99f";
+            //Client.Id = "64523d069a001465a6b9f99f";
             navigationManager
              .NavigateTo($"/buymembership/{Client.Id}");
         }
@@ -226,10 +226,10 @@
 
     protected override void OnAfterRender(bool firstRender){
         
-        /*if(firstRender){
+        if(firstRender){
             JSRuntime.InvokeVoidAsync("ready",this);
-        }*/
-        JSRuntime.InvokeVoidAsync("ready",this);
+        }
+        //JSRuntime.InvokeVoidAsync("ready",this);
 
     }
 }

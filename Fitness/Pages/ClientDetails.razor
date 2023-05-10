@@ -1,5 +1,5 @@
 ﻿@page "/clientdetails"
-@*@page "/clientdetails/{ClientId:String}"*@
+@page "/clientdetails/{ClientId}"
 <PageTitle>Client Details</PageTitle>
 
 @using Fitness.Data
@@ -144,11 +144,16 @@ else
 	public List<ClientsMemberships> ClientMemberships = new List<ClientsMemberships>();
 	//public List<ClientsMembershipsExtended> ClientsMembershipsExtendeds = new List<ClientsMembershipsExtended>(); 
 
+
+	/// <summary>
+	/// Ha megy a navigalas ezt a ClientId-t kell atadni az OnInitializedAsync()-ben 
+	/// </summary>
 	[Parameter]
-	public string? ClientId { get; set; }
+	public string ClientId { get; set; }
 
 	protected async override Task OnInitializedAsync()
 	{
+		//////////////////////////////////////////// csak itt ///////////////////////////////////////////
 		Client = await clientService.GetClientAsync(clientId);
 		ClientMemberships = await clientsMembershipsService.GetClientAllMembershipsAsync(Client.Id);
 		//ClientsMembershipsExtendeds = await clientsMembershipsService.SearchClientMembershipDescriptioAsync(Client.Id);
@@ -254,7 +259,7 @@ else
 	private void NavigateEditPageButtonHandler()
 	{
 		//navigationManager.NavigateTo($"/editclientinfo/{Client.Id}");
-		navigationManager.NavigateTo($"/editclientinfo");
+		navigationManager.NavigateTo($"/editclientinfo/{Client.Id}");
 	}
 
 }

@@ -1,5 +1,5 @@
-﻿@page "/editclientinfo"
-@*@page "/editclientinfo/{ClientId:String}"*@
+﻿@*@page "/editclientinfo"*@
+@page "/editclientinfo/{ClientId}"
 
 <PageTitle>New Client</PageTitle>
 
@@ -16,6 +16,13 @@
 }
 else{
 <div class="row">
+        @if (imageUrl.Length > 0)
+        {
+            <div class="col-md-6" style="width:300px; height:300px; margin:10px;">
+                <div id="results">Your image</div>
+                <img src="@imageUrl" alt="Alternate Text" style="width:240px; height:200px;" />
+            </div>
+        }
     <div class="col-md-4">
         <EditForm Model="@Client" OnValidSubmit="@HandleValidSubmit">
         <DataAnnotationsValidator />
@@ -74,7 +81,7 @@ else{
                 <ValidationMessage For="@(() => Client.Barcode)" />
             </div>
         </div>*@
-        <div class="row" style="margin-top:5px">
+        @*<div class="row" style="margin-top:5px">
             <div class="col-md-4">
                 <button type="button" class="btn btn-primary" @onclick="Capture">
                     Create photo 
@@ -86,7 +93,7 @@ else{
                 </div>
             </div>
             
-        </div>
+        </div>*@
         <div class="row" style="margin-top:5px">
             <div class="col-md-4">
                 <label> Additional Information: </label>
@@ -110,28 +117,21 @@ else{
             }
     </EditForm>
     </div>
-    @if (imageUrl.Length > 0)
-    {
-        <div class="col-md-6" style="width:300px; height:300px; margin:150px;">
-            <div id="results">Your image</div>
-            <img src="@imageUrl" alt="Alternate Text" style="width:240px; height:200px;" />
-        </div>
-    }
 </div>
 }
 
 @code {
     Client Client ;
-    private string clientId = "64568d675b43a00177c57031";
+    //private string clientId = "64568d675b43a00177c57031";
     bool clientIsSave = false;
     string imageUrl;
 
     [Parameter]
-    public string? ClientId { get; set; }
+    public string ClientId { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
-        Client = await clientService.GetClientAsync(clientId);
+        Client = await clientService.GetClientAsync(ClientId);
         imageUrl = Client.Photo;
     }
     private async Task HandleValidSubmit()
@@ -154,7 +154,7 @@ else{
     }
     private async Task ResetAsync()
     {
-        Client = await clientService.GetClientAsync(clientId);
+        Client = await clientService.GetClientAsync(ClientId);
 
     }
     private void GenerateBarcode()
@@ -164,7 +164,7 @@ else{
         Client.Barcode = uniqueId.Replace("/", "").Replace("+", "").Substring(0, 13);
     }
 
-    public async void Capture()
+    /*public async void Capture()
     {
         imageUrl = await JSRuntime.InvokeAsync<string>("take_snapshot");
         StateHasChanged();
@@ -177,6 +177,6 @@ else{
             JSRuntime.InvokeVoidAsync("ready",this);
         }
 
-    }
+    }*/
 
 }
