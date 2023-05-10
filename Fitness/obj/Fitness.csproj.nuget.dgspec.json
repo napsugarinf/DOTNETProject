@@ -48,6 +48,14 @@
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[2.19.1, )"
+            },
+            "Syncfusion.Blazor.Data": {
+              "target": "Package",
+              "version": "[21.2.3, )"
+            },
+            "Syncfusion.Blazor.Grid": {
+              "target": "Package",
+              "version": "[21.2.3, )"
             }
           },
           "imports": [

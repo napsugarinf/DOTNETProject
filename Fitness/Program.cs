@@ -4,6 +4,7 @@ using Fitness.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,8 @@ builder.Services.AddScoped<IGymService, GymService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IClientsMembershipsService, ClientsMembershipsService>();
 builder.Services.AddScoped<ICheckInService, CheckInService>();
+builder.Services.AddScoped<IClientSpecialService, ClientSpecialService>();
+builder.Services.AddSyncfusionBlazor();
 /*
 builder.Services.AddAuthentication(options =>
 {
