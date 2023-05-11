@@ -61,7 +61,7 @@
         </tbody>
     </table>
 </div>
-
+@*
 <div class="col-md-8">
     <table class="table table-striped table-bordered">
         <thead>
@@ -72,23 +72,25 @@
             </tr>
         </thead>
         <tbody>
-          @*  @if (gyms.Count() > 0)
-            { *@
+           @if (gyms.Count() > 0)
+            
                 @foreach (var gym in gyms)
                 {
                     <tr>
                         <td>@gym.Name</td>
                         <td>@gym.Id</td>
 
-                    <td>
-                        @gym.TypeOfMemberships
+                
+                        <td>
+
+                       
                         @foreach (var membership in @gym.TypeOfMemberships)
                         {
                             
                         <td>@membership.Id</td>
                         <td>@membership.Description</td>
                         }
-                    </td>
+                        </td>
 
                         <td>
                         <button class="btn btn-primary" @onclick="@(e=>Edit(gym.Id))">Edit</button>
@@ -99,10 +101,12 @@
                         </td>
                     </tr>
                 }
-            @*  } *@
+              } 
         </tbody>
     </table>
 </div>
+
+*@
 @code {
 
     Gym Gym = new Gym();

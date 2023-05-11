@@ -46,7 +46,7 @@ namespace Fitness.Service
                 _gymTable.ReplaceOne(x => x.Id == gym.Id, gym);
             }
         }
-
+        /*
 
         public async Task<List<Gym>> GetGymsWithMemberships()
         {
@@ -75,6 +75,32 @@ namespace Fitness.Service
             var cursor = await _gymTable.AggregateAsync<Gym>(pipeline);
             return await cursor.ToListAsync();
         }
+        */
+
+
+        public async Task<List<Gym>> GetGymsWithMemberships()
+        {
+            var pipeline = new BsonDocument[]
+            {
+        new BsonDocument("$match", new BsonDocument("isDeleted", false)),
+        new BsonDocument("$lookup", new BsonDocument
+        {
+            { "from", "TypeOfMemberships" },
+            { "localField", "Id" },
+            { "foreignField", "GymId" },
+            { "as", "TypeOfMemberships" }
+        }),
+        new BsonDocument("$project", new BsonDocument
+        {
+            { "TypeOfMemberships.GymId", 0 }
+        })
+            };
+
+            var cursor = await _gymTable.AggregateAsync<Gym>(pipeline);
+            return await cursor.ToListAsync();
+        }
+
+
 
 
     }
